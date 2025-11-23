@@ -1,3 +1,18 @@
+import MintBadge from "../components/MintBadge";
+
+export default function App() {
+  return (
+    <div>
+      <DarkModeToggle />
+      <h1>Validator Dashboard Final</h1>
+      <BadgeDisplay />
+      <FundingScroll />
+      <Contributors />
+      <MintBadge />
+    </div>
+  );
+}
+
 import DarkModeToggle from "../components/DarkModeToggle";
 
 export default function App() {
