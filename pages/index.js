@@ -64,3 +64,8 @@ export default function App() {
     </div>
   );
 }
+import ContributorTrace from "../components/ContributorTrace";
+import ContributorList from "../components/ContributorList";
+import FarcasterEmbed from "../components/FarcasterEmbed"; // or FarcasterFeed
+import SnapshotExport from "../components/SnapshotExport";
+import LanguageToggle from "../components/LanguageToggle";
