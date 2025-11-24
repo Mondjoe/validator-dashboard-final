@@ -12,3 +12,16 @@ export default function Contributors() {
     </div>
   );
 }
+import DarkModeToggle from "../components/DarkModeToggle";
+
+export default function App() {
+  return (
+    <div>
+      <DarkModeToggle />
+      <h1>Validator Dashboard Final</h1>
+      <BadgeDisplay />
+      <FundingScroll />
+      <Contributors />
+    </div>
+  );
+}
