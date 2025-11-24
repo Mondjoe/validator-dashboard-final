@@ -1,0 +1,34 @@
+// pages/index.js
+import DarkModeToggle from "../components/DarkModeToggle";
+import BadgeDisplay from "../components/BadgeDisplay";
+import FundingScroll from "../components/FundingScroll";
+import Contributors from "../components/Contributors";
+import ContributorTrace from "../components/ContributorTrace";
+import ContributorList from "../components/ContributorList";
+import FarcasterEmbed from "../components/FarcasterEmbed";
+// Or use FarcasterFeed if you add the API route
+// import FarcasterFeed from "../components/FarcasterFeed";
+import MintBadge from "../components/MintBadge";
+import SnapshotExport from "../components/SnapshotExport";
+
+export default function App() {
+  return (
+    <div>
+      <DarkModeToggle />
+      <h1>Validator Dashboard Final</h1>
+
+      <BadgeDisplay />
+      <FundingScroll />
+      <Contributors />
+
+      <ContributorTrace />
+      <ContributorList />
+
+      <MintBadge />
+      <SnapshotExport />
+
+      <FarcasterEmbed />
+      {/** Or <FarcasterFeed /> if you add /api/casts */}
+    </div>
+  );
+}
