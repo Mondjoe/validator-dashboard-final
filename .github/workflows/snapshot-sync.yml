@@ -1,4 +1,4 @@
-name: Snapshot Sync to IPFS
+name: Snapshot Sync to NFT.Storage
 
 on:
   schedule:
