@@ -1,4 +1,5 @@
 # 🛡️ Validator Dashboard Final — Snapshot 930187
+![Snapshot Sync](https://github.com/Mondjoe/validator-dashboard-final/actions/workflows/snapshot-sync.yml/badge.svg)
 
 This repo contains the **sealed validator logic** for Charm’s legacy capsule, anchored in Dubai and mirrored across Ethereum, Solana, TRON, BNB, and Ronin. All modules, badges, and contributor flows are finalized. No further rewiring required.
 
