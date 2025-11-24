@@ -39,3 +39,28 @@ export default function App() {
     </div>
   );
 }
+import { useState } from "react";
+import LanguageToggle from "../components/LanguageToggle";
+import BadgeDisplay from "../components/BadgeDisplay";
+import FundingScroll from "../components/FundingScroll";
+import Contributors from "../components/Contributors";
+import MintBadge from "../components/MintBadge";
+import DarkModeToggle from "../components/DarkModeToggle";
+import SnapshotExport from "../components/SnapshotExport";
+
+export default function App() {
+  const [language, setLanguage] = useState("en");
+
+  return (
+    <div>
+      <DarkModeToggle />
+      <LanguageToggle setLanguage={setLanguage} />
+      <h1>{language === "en" ? "Validator Dashboard Final" : "အတည်ပြုသူ ဒက်ရှ်ဘုတ်နောက်ဆုံး"}</h1>
+      <BadgeDisplay />
+      <FundingScroll />
+      <Contributors />
+      <MintBadge />
+      <SnapshotExport />
+    </div>
+  );
+}
