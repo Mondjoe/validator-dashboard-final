@@ -6,7 +6,7 @@ const badgeABI = [
   "function mint(address to, uint256 badgeId) public"
 ];
 
-const badgeContractAddress = "0xYourBadgeContractAddress";
+const badgeContractAddress = "0x29403B1AC2B745c806e4d4988e4C1B6F4c119b95";
 
 export default function MintBadge() {
   const [status, setStatus] = useState("");
