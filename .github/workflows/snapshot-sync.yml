@@ -1,4 +1,4 @@
-name: Snapshot Sync to NFT.Storage
+name: Snapshot Sync to IPFS
 
 on:
   schedule:
@@ -19,8 +19,14 @@ jobs:
           cp config.js export/snapshot_930187.js
 
       - name: Upload to IPFS via web3.storage
+        id: upload
         env:
           WEB3_STORAGE_TOKEN: ${{ secrets.WEB3_STORAGE_TOKEN }}
         run: |
           npm install -g web3.storage
-          web3.storage put export/snapshot_930187.js --token=$WEB3_STORAGE_TOKEN
+          CID=$(web3.storage put export/snapshot_930187.js --token=$WEB3_STORAGE_TOKEN | tail -n 1)
+          echo "cid=$CID" >> $GITHUB_OUTPUT
+
+      - name: Show CID
+        run: echo "Snapshot uploaded with CID: ${{ steps.upload.outputs.cid }}"
+
