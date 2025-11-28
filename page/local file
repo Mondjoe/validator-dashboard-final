@@ -1,7 +1,0 @@
-cd "C:\Users\kyawz\Downloads\validator-dashboard-final"
-git init
-git add .
-git commit -m "Add minimal Next.js setup"
-git branch -M main
-git remote add origin https://github.com/Mondjoe/validator-dashboard-final.git
-git push -u origin main
