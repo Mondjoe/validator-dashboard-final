@@ -1,18 +1,57 @@
 import { NextResponse } from 'next/server';
-import { fetchPlaceholder } from '../../../lib/rpc';
+
+const RPC = "https://eth.llamarpc.com";
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const address = searchParams.get('address');
 
   if (!address) {
-    return NextResponse.json({ error: 'Missing address' }, { status: 400 });
+    return NextResponse.json({ error: "Missing address" }, { status: 400 });
   }
 
-  const data = await fetchPlaceholder('ethereum', address);
-  return NextResponse.json({
-    ...data,
-    symbol: 'ETH',
-    note: 'Ethereum endpoint placeholder – real RPC will be added next.'
-  });
+  try {
+    // 1) Fetch native ETH balance
+    const balanceRes = await fetch(RPC, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        jsonrpc: "2.0",
+        id: 1,
+        method: "eth_getBalance",
+        params: [address, "latest"]
+      })
+    });
+
+    const balanceJson = await balanceRes.json();
+
+    if (balanceJson.error) {
+      return NextResponse.json({
+        error: "Invalid Ethereum address or RPC error",
+        details: balanceJson.error
+      }, { status: 400 });
+    }
+
+    const wei = parseInt(balanceJson.result, 16);
+    const eth = wei / 1e18;
+
+    // 2) No token list yet (we add later)
+    const tokens = [];
+
+    return NextResponse.json({
+      address,
+      chain: "ethereum",
+      nativeBalance: eth,
+      symbol: "ETH",
+      tokens,
+      note: "Live Ethereum RPC data"
+    });
+
+  } catch (err) {
+    return NextResponse.json({
+      error: "Unexpected server error",
+      details: err.message
+    }, { status: 500 });
+  }
 }
+
