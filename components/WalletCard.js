@@ -5,47 +5,7 @@ export default function WalletCard({ data, chain, logo }) {
   if (!data) {
     return (
       <div style={{ opacity: 0.6 }}>
-        <WalletCard
-          data={solData}
-          chain="solana"
-          logo="/logos/solana.png"
-        />
-
-        <WalletCard
-          data={ethData}
-          chain="ethereum"
-          logo="/logos/ethereum.png"
-        />
-
-       <WalletCard
-         data={baseData}
-         chain="base"
-         logo="/logos/base.png"
-       />
-
-       <WalletCard
-         data={opData}
-         chain="optimism"
-         logo="/logos/optimism.png"
-       />
-
-       <WalletCard
-         data={tonData}
-         chain="ton"
-         logo="/logos/ton.png"
-       />
-
-       <WalletCard
-         data={tronData}
-         chain="tron"
-         logo="/logos/tron.png"
-       />
-
-       <WalletCard
-         data={btcData}
-         chain="bitcoin"
-         logo="/logos/bitcoin.png"
-       />
+        No data yet. Enter a wallet and click.
       </div>
     );
   }
@@ -73,7 +33,7 @@ export default function WalletCard({ data, chain, logo }) {
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div>
           <strong>Native Balance:</strong>{' '}
-          {formatBalance(data.nativeBalance, data.nativeCurrency)}
+          {formatBalance(data.nativeBalance, data.decimals)}
         </div>
       </div>
     </section>
