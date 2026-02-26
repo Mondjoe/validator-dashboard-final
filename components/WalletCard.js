@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { formatBalance } from '../lib/format';
 
-export default function WalletCard({ data, chain, Logo }) {
+export default function WalletCard({ data, chain, logo }) {
   if (!data) {
     return (
       <div style={{ opacity: 0.6 }}>
-        No data yet. Enter a wallet and click “Fetch Wallet Data”.
+        No data yet. Enter a wallet and click “
       </div>
     );
   }
@@ -22,38 +22,19 @@ export default function WalletCard({ data, chain, Logo }) {
       }}
     >
       <h2 style={{ marginTop: 0, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
-  <Image src={logo} alt={chain} width={24} height={24} />
-  {chain.toUpperCase()} Wallet
+        <Image src={logo} alt={chain} width={24} height={24} />
+        {chain.toUpperCase()} Wallet
       </h2>
 
-      <div style={{ fontSize: 13, opacity: 0.8, wordBreak: 'break-all', marginBottom: 12 }}>
+      <div style={{ fontSize: 13, opacity: 0.8 }}>
         {data.address}
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div>
           <strong>Native Balance:</strong>{' '}
-          {formatBalance(data.nativeBalance, data.symbol)}
+          {formatBalance(data.nativeBalance, data.nativeCurrency)}
         </div>
-
-        {Array.isArray(data.tokens) && data.tokens.length > 0 && (
-          <div>
-            <strong>Tokens:</strong>
-            <ul style={{ margin: '4px 0 0 16px', padding: 0 }}>
-              {data.tokens.map((t, i) => (
-                <li key={i}>
-                  {t.symbol || 'TOKEN'} – {formatBalance(t.balance, t.symbol)}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {data.note && (
-          <div style={{ marginTop: 8, fontSize: 12, opacity: 0.7 }}>
-            {data.note}
-          </div>
-        )}
       </div>
     </section>
   );
