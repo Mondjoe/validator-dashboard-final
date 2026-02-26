@@ -1,6 +1,7 @@
+import Image from "next/image";
 import { formatBalance } from '../lib/format';
 
-export default function WalletCard({ data, chain }) {
+export default function WalletCard({ data, chain, Logo }) {
   if (!data) {
     return (
       <div style={{ opacity: 0.6 }}>
@@ -20,8 +21,9 @@ export default function WalletCard({ data, chain }) {
         marginTop: 8
       }}
     >
-      <h2 style={{ marginTop: 0, marginBottom: 8, fontSize: 20 }}>
-        {chain.toUpperCase()} Wallet
+      <h2 style={{ marginTop: 0, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
+  <Image src={logo} alt={chain} width={24} height={24} />
+  {chain.toUpperCase()} Wallet
       </h2>
 
       <div style={{ fontSize: 13, opacity: 0.8, wordBreak: 'break-all', marginBottom: 12 }}>
