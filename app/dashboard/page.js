@@ -89,7 +89,7 @@ export default function DashboardPage() {
         </div>
       )}
 
-      <WalletCard data={data} chain={chain} />
-    </main>
+      < <WalletCard data={data} chain={chain} logo={`/logos/${chain}.png`}/>
+      </main>
   );
 }
