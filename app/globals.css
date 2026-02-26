@@ -1,0 +1,13 @@
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
+  color: #e5e7eb;
+}
+
+input, select, button {
+  font-family: inherit;
+}
