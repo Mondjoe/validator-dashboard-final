@@ -1,41 +1,44 @@
-import Image from "next/image";
-import { formatBalance } from '../lib/format';
-
-export default function WalletCard({ data, chain, logo }) {
+export default function WalletCard({ data }) {
   if (!data) {
     return (
-      <div style={{ opacity: 0.6 }}>
-        No data yet. Enter a wallet and click.
+      <div className="p-4 border rounded-lg bg-gray-50">
+        <p>No data yet.</p>
+      </div>
+    );
+  }
+
+  if (data.error) {
+    return (
+      <div className="p-4 border rounded-lg bg-red-50">
+        <p className="text-red-600">Error: {data.error}</p>
       </div>
     );
   }
 
   return (
-    <section
-      style={{
-        borderRadius: 16,
-        border: '1px solid #1f2937',
-        padding: 16,
-        background: 'rgba(15,23,42,0.9)',
-        boxShadow: '0 18px 40px rgba(0,0,0,0.6)',
-        marginTop: 8
-      }}
-    >
-      <h2 style={{ marginTop: 0, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
-        <Image src={logo} alt={chain} width={24} height={24} />
-        {chain.toUpperCase()} Wallet
-      </h2>
+    <div className="p-4 border rounded-lg bg-white shadow-sm">
+      <div className="flex items-center gap-3 mb-3">
+        <img
+          src={data.logo}
+          alt={data.chainName}
+          className="w-6 h-6"
+        />
+        <h2 className="font-semibold text-lg">{data.chainName}</h2>
+      </div>
 
-      <div style={{ fontSize: 13, opacity: 0.8 }}>
+      <p className="text-sm text-gray-600 break-all">
         {data.address}
+      </p>
+
+      <div className="mt-3">
+        <p className="font-medium">
+          Native Balance: {data.nativeBalance} {data.symbol}
+        </p>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <div>
-          <strong>Native Balance:</strong>{' '}
-          {formatBalance(data.nativeBalance, data.decimals)}
-        </div>
+      <div className="mt-2 text-xs text-gray-500">
+        Chain Type: {data.chainType}
       </div>
-    </section>
+    </div>
   );
 }
