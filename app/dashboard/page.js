@@ -1,63 +1,11 @@
-'use client';
+return (
+  <div className="min-h-screen flex justify-center items-start pt-10 bg-gray-50">
+    <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-sm">
 
-import { useState } from 'react';
-import ChainSelector from '../../components/ChainSelector';
-import WalletCard from '../../components/WalletCard';
+      <h1 style={{ fontSize: 28, marginBottom: 8 }}>
+        Charm Capsule – Multi‑Chain Wallet Dashboard
+      </h1>
 
-const CHAINS = [
-  // EVM Group
-  { key: "ethereum", label: "Ethereum (EVM)" },
-  { key: "bnb", label: "BNB Chain (EVM)" },
-  { key: "arbitrum", label: "Arbitrum (EVM)" },
-  { key: "optimism", label: "Optimism (EVM)" },
-  { key: "polygon", label: "Polygon (EVM)" },
-  { key: "avalanche", label: "Avalanche (EVM)" },
-  { key: "base", label: "Base (EVM)" },
-  { key: "scroll", label: "Scroll (EVM)" },
-  { key: "zksync", label: "zkSync (EVM)" },
-
-  // Non‑EVM Group
-  { key: "solana", label: "Solana" },
-  { key: "ton", label: "TON" },
-  { key: "tron", label: "TRON" },
-  { key: "sui", label: "Sui" },
-
-  // Bitcoin Group
-  { key: "bitcoin", label: "Bitcoin" },
-];
-
-export default function DashboardPage() {
-  const [wallet, setWallet] = useState('');
-  const [chain, setChain] = useState('solana');
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState(null);
-  const [error, setError] = useState('');
-
-  const handleFetch = async () => {
-    setError('');
-    setData(null);
-
-    if (!wallet.trim()) {
-      setError('Please enter a wallet address.');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const res = await fetch(`/api/${chain}?address=${encodeURIComponent(wallet.trim())}`);
-      if (!res.ok) throw new Error('Failed to fetch wallet data');
-      const json = await res.json();
-      setData(json);
-    } catch (e) {
-      setError(e.message || 'Unknown error');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <main style={{ minHeight: '100vh', padding: '32px 16px', maxWidth: 960, margin: '0 auto' }}>
-      <h1 style={{ fontSize: 28, marginBottom: 8 }}>Charm Capsule – Multi‑Chain Wallet Dashboard</h1>
       <p style={{ opacity: 0.8, marginBottom: 24 }}>
         Enter any wallet address and select a chain to view balances, tokens, and basic status.
       </p>
@@ -101,8 +49,14 @@ export default function DashboardPage() {
         </div>
       )}
 
-      < <WalletCard data={data} chain={chain} logo={`/logos/${chain}.png'}/>
+      {data && (
+        <WalletCard
+          data={data}
+          chain={chain}
+          logo={`/logos/${chain}.png`}
+        />
       )}
-      </div>
-  ;
 
+    </div>
+  </div>
+);
