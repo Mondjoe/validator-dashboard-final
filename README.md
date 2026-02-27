@@ -53,7 +53,32 @@ Each chain includes a corresponding logo stored in `public/logos/`.
 ---
 
 ## Project Structure
-
+validator-dashboard-final/
+├── app/
+│   ├── api/
+│   ├── dashboard/
+│   ├── globals.css
+│   └── layout.js
+├── components/
+│   ├── ChainSelector.js
+│   └── WalletCard.js
+├── lib/
+│   ├── format.js
+│   └── rpc.js
+├── public/
+│   └── logos/
+│       ├── ethereum.png
+│       ├── optimism.png
+│       ├── arbitrum.png
+│       ├── base.png
+│       ├── polygon.png
+│       ├── bnb.png
+│       ├── solana.png
+│       ├── avalanche.png
+│       ├── zksync.png
+│       └── scroll.png
+├── next.config.js
+└── package.json
 ---
 
 ## Installation
