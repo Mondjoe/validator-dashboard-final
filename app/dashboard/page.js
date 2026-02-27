@@ -26,7 +26,6 @@ const CHAINS = [
   { key: "bitcoin", label: "Bitcoin" },
 ];
 
-
 export default function DashboardPage() {
   const [wallet, setWallet] = useState('');
   const [chain, setChain] = useState('solana');
