@@ -1,29 +1,14 @@
 "use client";
 
-import { WagmiProvider, createConfig, http } from "wagmi";
+import { WagmiProvider } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-  mainnet,
-  bsc,
-  optimism,
-  base,
-  arbitrum,
-  polygon,
-  scroll,
-} from "wagmi/chains";
+import { config } from "./providers/evm-provider";
 
-const config = createConfig({
-  chains: [mainnet, bsc, optimism, base, arbitrum, polygon, scroll],
-  transports: {
-    [mainnet.id]: http(),
-    [bsc.id]: http(),
-    [optimism.id]: http(),
-    [base.id]: http(),
-    [arbitrum.id]: http(),
-    [polygon.id]: http(),
-    [scroll.id]: http(),
-  },
-});
+import { SolanaProvider } from "./providers/solana-provider";
+import { TonProvider } from "./providers/ton-provider";
+import { TronProvider } from "./providers/tron-provider";
+import { SuiProvider } from "./providers/sui-provider";
+import { BTCProvider } from "./providers/btc-provider";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +16,17 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        {children}
+        <SolanaProvider>
+          <TonProvider>
+            <TronProvider>
+              <SuiProvider>
+                <BTCProvider>
+                  {children}
+                </BTCProvider>
+              </SuiProvider>
+            </TronProvider>
+          </TonProvider>
+        </SolanaProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );
