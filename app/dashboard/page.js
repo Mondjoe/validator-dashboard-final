@@ -4,7 +4,15 @@ import { useState } from "react";
 import WalletCard from "@/components/WalletCard";
 import ChainSelector from "@/components/ChainSelector";
 
-const CHAINS = ["solana", "ethereum", "bsc", "polygon", "tron", "ton", "bitcoin"];
+const CHAINS = [
+  "solana",
+  "ethereum",
+  "bsc",
+  "polygon",
+  "tron",
+  "ton",
+  "bitcoin"
+];
 
 export default function DashboardPage() {
   const [wallet, setWallet] = useState("");
@@ -47,41 +55,45 @@ export default function DashboardPage() {
           Enter any wallet address and select a chain to view balances, tokens, and basic status.
         </p>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 24 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 24 }}>
           <input
             value={wallet}
-            onChange={e => setWallet(e.target.value)}
+            onChange={(e) => setWallet(e.target.value)}
             placeholder="Paste wallet address (Solana / EVM / TON / TRON / BTC)"
             style={{
-              padding: '10px 12px',
+              padding: "10px 12px",
               borderRadius: 8,
-              border: '1px solid #374151',
-              background: '#020617',
-              color: '#e5e7eb'
+              border: "1px solid #374151",
+              background: "#020617",
+              color: "#e5e7eb"
             }}
           />
 
-          <ChainSelector chains={CHAINS} value={chain} onChange={setChain} />
+          <ChainSelector
+            chains={CHAINS}
+            value={chain}
+            onChange={setChain}
+          />
 
           <button
             onClick={handleFetch}
             disabled={loading}
             style={{
-              padding: '10px 14px',
+              padding: "10px 14px",
               borderRadius: 8,
-              border: 'none',
-              background: loading ? '#4b5563' : '#22c55e',
-              color: '#020617',
+              border: "none",
+              background: loading ? "#4b5563" : "#22c55e",
+              color: "#020617",
               fontWeight: 600,
-              cursor: loading ? 'default' : 'pointer'
+              cursor: loading ? "default" : "pointer"
             }}
           >
-            {loading ? 'Loading…' : 'Fetch Wallet Data'}
+            {loading ? "Loading…" : "Fetch Wallet Data"}
           </button>
         </div>
 
         {error && (
-          <div style={{ marginBottom: 16, color: '#f97373' }}>
+          <div style={{ marginBottom: 16, color: "#f97373" }}>
             {error}
           </div>
         )}
