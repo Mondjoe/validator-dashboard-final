@@ -48,12 +48,12 @@ export default function DashboardPage() {
       <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-sm">
 
         <h1 style={{ fontSize: 28, marginBottom: 8 }}>
-          Charm Capsule – Multi‑Chain Wallet Dashboard
-        </h1>
+  Charm_Capsule Validator
+</h1>
+<p style={{ opacity: 0.8, marginBottom: 24 }}>
+  Multi‑Chain Wallet Dashboard
+</p>
 
-        <p style={{ opacity: 0.8, marginBottom: 24 }}>
-          Enter any wallet address and select a chain to view balances, tokens, and basic status.
-        </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 24 }}>
           <input
