@@ -1,3 +1,6 @@
+import ChainSelector from "../../components/ChainSelector";
+import WalletCard from "../../components/WalletCard";
+
 "use client";
 
 import { useState } from "react";
