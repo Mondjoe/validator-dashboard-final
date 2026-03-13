@@ -1,3 +1,7 @@
+export default function ChainSelector() {
+  return null; // temporary placeholder
+}
+
 export const CHAINS = [
   { key: "ethereum", label: "Ethereum (EVM)" },
   { key: "bnb", label: "BNB Chain (EVM)" },
