@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import WalletCard from "@/components/WalletCard";
-import ChainSelector from "@/components/ChainSelector";
+import WalletCard from '../../components/WalletCard';
+import ChainSelector from '../../components/ChainSelector';
 
 const CHAINS = [
   "solana",
