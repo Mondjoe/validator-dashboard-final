@@ -1,112 +1,83 @@
 "use client";
-
 import { useState } from "react";
-import WalletCard from "../../components/WalletCard";
-import ChainSelector from "../../components/ChainSelector";
 
-const CHAINS = [
-  "solana",
-  "ethereum",
-  "bsc",
-  "polygon",
-  "tron",
-  "ton",
-  "bitcoin"
-];
-
-export default function DashboardPage() {
-  const [wallet, setWallet] = useState("");
-  const [chain, setChain] = useState("solana");
+export default function Dashboard() {
+  const [address, setAddress] = useState("");
+  const [chain, setChain] = useState("ethereum");
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
-  async function handleFetch() {
-    try {
-      setLoading(true);
-      setError("");
-      setData(null);
+  async function fetchWallet() {
+    setLoading(true);
+    setData(null);
 
-      const res = await fetch(`/api/wallet?address=${wallet}&chain=${chain}`);
-      const json = await res.json();
+    const res = await fetch(
+      `/api/wallet?address=${address}&chain=${chain}`
+    );
 
-      if (!res.ok) {
-        setError(json.error || "Failed to fetch wallet data");
-        return;
-      }
-
-      setData(json);
-    } catch (err) {
-      setError("Unexpected error");
-    } finally {
-      setLoading(false);
-    }
+    const json = await res.json();
+    setData(json);
+    setLoading(false);
   }
 
   return (
-    <div className="min-h-screen flex justify-center items-start pt-10 bg-gray-50">
-      <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-sm">
+    <div style={{ padding: "20px" }}>
+      <h1>Charm Capsule – Multi‑Chain Wallet Dashboard</h1>
 
-        <h1 style={{ fontSize: 28, marginBottom: 8 }}>
-          Charm Capsule – Multi‑Chain Wallet Dashboard
-        </h1>
+      <input
+        placeholder="Enter wallet address"
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+        style={{ width: "400px", padding: "10px", marginTop: "20px" }}
+      />
 
-        <p style={{ opacity: 0.8, marginBottom: 24 }}>
-          Enter any wallet address and select a chain to view balances, tokens, and basic status.
-        </p>
+      {/* ⭐ FIXED SELECT — only ONE */}
+      <select
+        value={chain}
+        onChange={(e) => setChain(e.target.value)}
+        style={{ padding: "10px", marginLeft: "10px" }}
+      >
+        <option value="ethereum">ethereum</option>
+        <option value="solana">solana</option>
+        <option value="bnb">bnb</option>
+        <option value="polygon">polygon</option>
+        <option value="arbitrum">arbitrum</option>
+        <option value="optimism">optimism</option>
+        <option value="avalanche">avalanche</option>
+        <option value="base">base</option>
+        <option value="scroll">scroll</option>
+        <option value="zksync">zksync</option>
+        <option value="ton">ton</option>
+        <option value="tron">tron</option>
+        <option value="sui">sui</option>
+        <option value="bitcoin">bitcoin</option>
+        <option value="sui">sui</option>
+        <option value="aptos">aptos</option>
+      </select>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 24 }}>
-          <input
-            value={wallet}
-            onChange={(e) => setWallet(e.target.value)}
-            placeholder="Paste wallet address (Solana / EVM / TON / TRON / BTC)"
-            style={{
-              padding: "10px 12px",
-              borderRadius: 8,
-              border: "1px solid #374151",
-              background: "#020617",
-              color: "#e5e7eb"
-            }}
-          />
+      {/* ⭐ FIXED BUTTON — correct opening tag */}
+      <button
+        onClick={fetchWallet}
+        style={{
+          display: "block",
+          marginTop: "20px",
+          padding: "10px 20px",
+          background: "green",
+          color: "white",
+          border: "none",
+          cursor: "pointer"
+        }}
+      >
+        Fetch Wallet Data
+      </button>
 
-          <ChainSelector
-            chains={CHAINS}
-            value={chain}
-            onChange={setChain}
-          />
+      {loading && <p style={{ marginTop: "20px" }}>Loading...</p>}
 
-          <button
-            onClick={handleFetch}
-            disabled={loading}
-            style={{
-              padding: "10px 14px",
-              borderRadius: 8,
-              border: "none",
-              background: loading ? "#4b5563" : "#22c55e",
-              color: "#020617",
-              fontWeight: 600,
-              cursor: loading ? "default" : "pointer"
-            }}
-          >
-            {loading ? "Loading…" : "Fetch Wallet Data"}
-          </button>
-        </div>
-
-        {error && (
-          <div style={{ marginBottom: 16, color: "#f97373" }}>
-            {error}
-          </div>
-        )}
-
-        {data && (
-          <WalletCard
-            data={data}
-            chain={chain}
-            logo={`/logos/${chain}.png`}
-          />
-        )}
-
-      </div>
+      {data && (
+        <pre style={{ marginTop: "20px", background: "#111", padding: "20px", color: "white" }}>
+          {JSON.stringify(data, null, 2)}
+        </pre>
+      )}
     </div>
   );
 }
