@@ -5,7 +5,12 @@ A fully featured **EVM + L2 + ZK multi‑chain validator dashboard** built with 
 ---
 
 ## Overview
-Validator Dashboard Final provides a unified interface for interacting with multiple blockchain networks across the EVM ecosystem. It is optimized for:
+Validator Dashboard Final provides a unified interface for interacting with multiple blockchain networks across the EVM ecosystem. It is optimized    # Charm Capsule
+   By the team behind Charm Finance (2020 AMM)
+   Live: https://charmcapsule.io
+   Telegram: https://t.me/charmfi
+   X: https://x.com/charmfi
+   Contact: Charmjoe71@outlook.com
 
 - Mobile‑first development  
 - Clean architecture  
