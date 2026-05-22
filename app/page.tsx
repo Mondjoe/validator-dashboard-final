@@ -1,17 +1,8 @@
-<<<<<<< HEAD
-export default function Home() {
-  return (
-    <div style={{ padding: 40 }}>
-      <h1 className="neon fade-in">Dashboard Running</h1>
-    </div>
-  );
-}
-=======
 'use client'
 
 import DashboardLayout from '@/components/DashboardLayout'
 import { portfolioData, recentTransactions, tokenHoldings, chainDistribution } from '@/lib/mockData'
-import { AreaChart, Area, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts'
+import { AreaChart, Area, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 import { ArrowUpRight, TrendingUp } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -190,4 +181,3 @@ export default function Home() {
     </DashboardLayout>
   )
 }
->>>>>>> 97da0969c39273142c519581487bd3908b60a0c3

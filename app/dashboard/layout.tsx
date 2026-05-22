@@ -1,12 +1,22 @@
-import { OperatorSidebar } from "@/components/OperatorSidebar";
+import type { Metadata } from 'next'
+import { ThemeProvider } from '@/contexts/ThemeContext'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
-export default function DashboardLayout({ children }) {
+export const metadata: Metadata = {
+  title: 'Validator Dashboard',
+  description: 'Multi-chain validator monitoring dashboard',
+}
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ display: "flex" }}>
-      <OperatorSidebar />
-      <div style={{ marginLeft: 220, padding: 20, width: "100%" }}>
-        {children}
-      </div>
-    </div>
-  );
+    <html lang="en">
+      <body>
+        <ThemeProvider>
+          <TooltipProvider>
+            {children}
+          </TooltipProvider>
+        </ThemeProvider>
+      </body>
+    </html>
+  )
 }
