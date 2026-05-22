@@ -9,16 +9,15 @@ export async function GET(req: Request) {
 
   if (peers.error) return Response.json(peers);
 
-  const results = [];
+  const results: any[] = [];
 
-  for (const p of peers.peers) {
-    const ip =
-      p.network?.remoteAddress?.split(":")[0] ||
-      p.address ||
-      p.ip ||
-      null;
+for (const peer of peers) {
+  const geoRes = await fetch(`https://ipapi.co/${peer.ip}/json/`);
+  const geo = await geoRes.json();
+  results.push(geo);
+}
 
-    if (!ip) continue;
+return Response.json({ peers: results });
 
     const geoRes = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/geo`,
