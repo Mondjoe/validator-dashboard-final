@@ -5,24 +5,20 @@ export async function GET() {
 
   for (const v of VALIDATORS) {
     const rewardsRes = await fetch(
-     `${process.env.NEXT_PUBLIC_BASE_URL}/api/rewards?chain=${v.chain}`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/rewards?chain=${v.chain}`
     );
     const rewards = await rewardsRes.json();
 
-    const uptimeRes = await fetch(
-      `https://beaconcha.in/api/v1/validator/${v.pubkey}/attestationefficiency`
-    );
-    const uptime = await uptimeRes.json();
+    // These two still reference v.pubkey — but your validators do NOT have pubkey.
+    // You must either remove these OR add pubkey to validators.
+    // For now, I will disable them so your build succeeds.
 
-    const performanceRes = await fetch(
-      `https://beaconcha.in/api/v1/validator/${v.pubkey}/performance`
-    );
-    const performance = await performanceRes.json();
+    const uptime = { data: { efficiency: 0 } };
+    const performance = { data: {} };
 
     results.push({
       id: v.id,
       chain: v.chain,
-      &pubkey=${v.pubkey}
       rewards,
       uptime: uptime.data?.efficiency || 0,
       performance: performance.data || {}
