@@ -1,9 +1,4 @@
-/*
- * DESIGN: Cyberpunk Noir — Transactions
- * - Full transaction history table
- * - Type/status filters with neon badges
- * - Hash links with copy functionality
- */
+"use client";
 
 import DashboardLayout from "@/components/ui/DashboardLayout";
 import { mockTransactions } from '@/lib/mockData';

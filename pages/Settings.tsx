@@ -1,9 +1,4 @@
-/*
- * DESIGN: Cyberpunk Noir — Settings
- * - Wallet connection settings
- * - Notification preferences
- * - Display options
- */
+"use client";
 
 import DashboardLayout from "@/components/ui/DashboardLayout";
 import { walletAddressFull } from '@/lib/mockData';

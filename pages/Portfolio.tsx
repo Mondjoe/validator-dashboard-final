@@ -1,9 +1,4 @@
-/*
- * DESIGN: Cyberpunk Noir — Portfolio
- * - Detailed token holdings with sparklines
- * - Portfolio allocation donut chart
- * - P&L tracking
- */
+"use client";
 
 import DashboardLayout from "@/components/ui/DashboardLayout";
 import { mockTokens, mockPortfolioHistory, portfolioStats, chainStats } from '@/lib/mockData';

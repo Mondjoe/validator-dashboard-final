@@ -1,9 +1,4 @@
-/*
- * DESIGN: Cyberpunk Noir — Gas Tracker
- * - Live gas price gauge
- * - 24h history chart
- * - Transaction cost estimator
- */
+"use client";
 
 import DashboardLayout from "@/components/ui/DashboardLayout";
 import { mockGasHistory } from '@/lib/mockData';

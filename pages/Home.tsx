@@ -1,10 +1,4 @@
-/*
- * DESIGN: Cyberpunk Noir — Main Dashboard
- * - Asymmetric grid layout with varied card sizes
- * - Animated stat cards with neon glow
- * - Portfolio chart + recent transactions
- * - NFT preview strip
- */
+"use client";
 
 import DashboardLayout from "@/components/ui/DashboardLayout";
 import {

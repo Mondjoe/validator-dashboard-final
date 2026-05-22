@@ -1,9 +1,4 @@
-/*
- * DESIGN: Cyberpunk Noir — Smart Contracts
- * - Contract interaction history
- * - Method call breakdown
- * - Gas usage analytics
- */
+"use client";
 
 import DashboardLayout from "@/components/ui/DashboardLayout";
 import { mockContractActivity } from '@/lib/mockData';

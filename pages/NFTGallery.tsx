@@ -1,9 +1,4 @@
-/*
- * DESIGN: Cyberpunk Noir — NFT Gallery
- * - Masonry-style grid with filter/sort controls
- * - Neon rarity badges
- * - Hover reveal with price and chain info
- */
+"use client";
 
 import DashboardLayout from "@/components/ui/DashboardLayout";
 import { mockNFTs, type NFT } from '@/lib/mockData';

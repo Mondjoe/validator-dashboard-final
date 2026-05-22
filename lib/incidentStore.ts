@@ -1,27 +1,30 @@
-import fs from "fs";
-import path from "path";
-
-const FILE = path.join(process.cwd(), "data/incidents.json");
+const STORAGE_KEY = "incidents";
 
 export function loadIncidents() {
+  if (typeof window === "undefined") return [];
   try {
-    const raw = fs.readFileSync(FILE, "utf8");
-    return JSON.parse(raw);
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
   } catch {
     return [];
   }
 }
 
-export function addIncident(incident: any) {export function addSessionEvent(event: any) {
+export function addIncident(incident: any) {
+  const list = loadIncidents();
+  list.unshift({
+    type: "incident",
+    timestamp: Date.now(),
+    ...incident,
+  });
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+}
+
+export function addSessionEvent(event: any) {
   const list = loadIncidents();
   list.unshift({
     type: "session-event",
-    time: new Date().toISOString(),
+    timestamp: Date.now(),
     ...event,
   });
-  fs.writeFileSync(FILE, JSON.stringify(list, null, 2));
-}
-  const list = loadIncidents();
-  list.unshift(incident); // newest first
-  fs.writeFileSync(FILE, JSON.stringify(list, null, 2));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
 }

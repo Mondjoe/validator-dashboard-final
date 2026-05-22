@@ -1,3 +1,5 @@
+"use client";
+
 import DashboardLayout from "@/components/ui/DashboardLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle, Home } from "lucide-react";

@@ -1,3 +1,5 @@
+"use client";
+
 import type { Metadata } from 'next'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { TooltipProvider } from '@/components/ui/tooltip'

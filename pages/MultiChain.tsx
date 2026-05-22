@@ -1,8 +1,4 @@
-/*
- * DESIGN: Cyberpunk Noir — Multi-Chain
- * - Chain overview cards with network stats
- * - Cross-chain portfolio breakdown
- */
+"use client";
 
 import DashboardLayout from "@/components/ui/DashboardLayout";
 import { chainStats } from '@/lib/mockData';
