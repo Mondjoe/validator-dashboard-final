@@ -9,7 +9,7 @@ export async function GET(req: Request) {
   const nodes = NODE_ENDPOINTS[chain];
   if (!nodes) return Response.json({ error: "Unknown chain" });
 
-  const results = [];
+  const results: any[] = [];
 
   for (const node of nodes) {
     try {
