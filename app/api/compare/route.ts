@@ -1,7 +1,7 @@
 import { VALIDATORS } from "@/lib/validators";
 
 export async function GET() {
-  const results = [];
+  const results: any[] = [];
 
   for (const v of VALIDATORS) {
     const rewardsRes = await fetch(
@@ -9,10 +9,7 @@ export async function GET() {
     );
     const rewards = await rewardsRes.json();
 
-    // These two still reference v.pubkey — but your validators do NOT have pubkey.
-    // You must either remove these OR add pubkey to validators.
-    // For now, I will disable them so your build succeeds.
-
+    // Disabled pubkey-based calls (your validators do not have pubkey)
     const uptime = { data: { efficiency: 0 } };
     const performance = { data: {} };
 
