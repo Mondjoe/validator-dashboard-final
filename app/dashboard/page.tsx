@@ -1,7 +1,4 @@
 import ChainStatus from "@/components/ui/ChainStatus";
-import OperatorAlerts from "@/components/OperatorAlerts";
-import CommandPalette from "@/components/CommandPalette";
-import RewardAnalytics from "@/components/RewardAnalytics";
 import { VALIDATORS } from "@/lib/validators";
 
 <OperatorAlerts validator={VALIDATORS[0]} />
