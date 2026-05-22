@@ -5,7 +5,7 @@
  * - Gas usage analytics
  */
 
-import DashboardLayout from '@/components/DashboardLayout';
+import DashboardLayout from "@/components/ui/DashboardLayout";
 import { mockContractActivity } from '@/lib/mockData';
 import { cn } from '@/lib/utils';
 import { CheckCircle, Code2, Copy, ExternalLink, XCircle, Zap } from 'lucide-react';

@@ -5,7 +5,7 @@
  * - Protocol logos and chain indicators
  */
 
-import DashboardLayout from '@/components/DashboardLayout';
+import DashboardLayout from "@/components/ui/DashboardLayout";
 import { mockStakingPools, mockTokens } from '@/lib/mockData';
 import { cn } from '@/lib/utils';
 import { ArrowUpRight, Coins, Lock, TrendingUp, Unlock, Zap } from 'lucide-react';
