@@ -9,9 +9,20 @@ import {
 } from "@/lib/mockData";
 
 import DashboardLayout from "@/components/ui/DashboardLayout";
-import { AreaChart, Area, PieChart, Pie, Cell, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
-import { ArrowUpRight, TrendingUp } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import {
+  AreaChart,
+  Area,
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip
+} from "recharts";
+import { ArrowUpRight, TrendingUp } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
   return (
