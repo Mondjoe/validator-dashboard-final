@@ -1,4 +1,4 @@
-import { ChainStatus } from "@/components/ui/ChainStatus";
+import { ChainStatus } from "@/components/ChainStatus"
 import { VALIDATORS } from "@/lib/validators";
 
 <OperatorAlerts validator={VALIDATORS[0]} />
