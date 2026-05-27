@@ -1,8 +1,8 @@
-import { ChainStatus } from "@/components/ChainStatus"
+import ChainStatus from "@/components/ChainStatus";
+import OperatorAlerts from "@/components/OperatorAlerts";
+import CommandPalette from "@/components/CommandPalette";
+import RewardAnalytics from "@/components/RewardAnalytics";
 import { VALIDATORS } from "@/lib/validators";
-import { OperatorAlerts } from "@/components/OperatorAlerts";
-import { CommandPalette } from "@/components/CommandPalette";
-import { RewardAnalytics } from "@/components/RewardAnalytics";
 
 export default function DashboardPage() {
   return (

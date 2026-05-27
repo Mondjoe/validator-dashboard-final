@@ -59,9 +59,9 @@ export const portfolioData = {
 
 // Chain distribution
 export const chainDistribution = [
-  { chain: "ETH", percent: 60 },
-  { chain: "SOL", percent: 25 },
-  { chain: "BNB", percent: 15 },
+  { chain: "ETH", percent: 60, color: "#00F5FF" },
+  { chain: "SOL", percent: 25, color: "#8B5CF6" },
+  { chain: "BNB", percent: 15, color: "#FF6B00" },
 ];
 
 // Recent transactions
