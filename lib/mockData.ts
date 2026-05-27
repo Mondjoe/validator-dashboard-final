@@ -28,3 +28,8 @@ export const recentTransactions = [
     status: "Confirmed"
   }
 ];
+
+export const mockPortfolioHistory = [
+  { timestamp: Date.now() - 86400_000, value: 11000 },
+  { timestamp: Date.now(), value: 12345 },
+];
