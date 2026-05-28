@@ -1,3 +1,4 @@
+import type { TooltipProps } from "recharts";
 import * as React from "react";
 import * as RechartsPrimitive from "recharts";
 
@@ -116,14 +117,13 @@ function ChartTooltipContent({
   color,
   nameKey,
   labelKey,
-}: React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
-  React.ComponentProps<"div"> & {
-    hideLabel?: boolean;
-    hideIndicator?: boolean;
-    indicator?: "line" | "dot" | "dashed";
-    nameKey?: string;
-    labelKey?: string;
-  }) {
+}: TooltipProps<number, string> & {
+  hideLabel?: boolean;
+  hideIndicator?: boolean;
+  indicator?: "line" | "dot" | "dashed";
+  nameKey?: string;
+  labelKey?: string;
+}) {
   const { config } = useChart();
 
   const tooltipLabel = React.useMemo(() => {
@@ -162,9 +162,7 @@ function ChartTooltipContent({
     labelKey,
   ]);
 
-  if (!active || !payload?.length) {
-    return null;
-  }
+  if (!active || !payload || payload.length === 0) return null;
 
   const nestLabel = payload.length === 1 && indicator !== "dot";
 
