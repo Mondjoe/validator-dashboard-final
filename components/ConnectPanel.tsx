@@ -7,12 +7,11 @@ import { TronWalletSection } from "@/components/TronWalletSection";
 import { EvmWalletSection } from "@/components/EvmWalletSection";
 
 export function ConnectPanel() {
-  const [activeChain, setActiveChain] = useState(CHAINS.EVM_MAINNET);
-type ChainType = "EVM" | "TON" | "TRON";
+  type ChainType = "EVM" | "TON" | "TRON";
 
-const [activeChain, setActiveChain] = useState<{ type: ChainType; name: string }>(
-  CHAINS.EVM_MAINNET
-);
+  const [activeChain, setActiveChain] = useState<{ type: ChainType; name: string }>(
+    CHAINS.EVM_MAINNET
+  );
   return (
     <div style={{ marginTop: 20 }}>
       <h2>Connect Wallet</h2>
