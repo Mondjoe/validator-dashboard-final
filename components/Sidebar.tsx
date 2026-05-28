@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useLocation } from 'wouter';
-import { walletAddress } from '@/lib/mockData';
+import { walletAddressFull } from "@/lib/mockData";
 
 interface NavItem {
   icon: React.ElementType;
