@@ -95,6 +95,3 @@ export const recentTransactions = [
     status: "Confirmed"
   }
 ];
-
-// Token holdings
-export const tokenHoldings = mockTokens;
