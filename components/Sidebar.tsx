@@ -104,13 +104,15 @@ export default function Sidebar() {
       {/* Wallet Info */}
       {!collapsed && (
         <div className="mx-3 mt-4 p-3 rounded-lg bg-[rgba(0,245,255,0.04)] border border-[rgba(0,245,255,0.1)]">
-          <div className="flex items-center gap-2 mb-1">
+           <div className="flex items-center gap-2 mb-1">
             <div className="w-2 h-2 rounded-full bg-[#39FF14] animate-pulse" />
             <span className="text-[10px] text-[#39FF14] font-medium tracking-wider uppercase">Connected</span>
+           </div>
+          <div className="font-mono text-[11px] text-[#00F5FF]/80 truncate">
+          {walletAddressFull.slice(0, 6) + "..." + walletAddressFull.slice(-4)}
           </div>
-          <div className="font-mono text-[11px] text-[#00F5FF]/80 truncate">{walletAddress}</div>
           <div className="text-[10px] text-white/40 mt-0.5">Ethereum Mainnet</div>
-        </div>
+          </div>
       )}
 
       {/* Navigation */}
