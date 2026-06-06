@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 export async function POST(req: Request) {
   const { chain, action } = await req.json();
 

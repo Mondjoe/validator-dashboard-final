@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { NODE_ENDPOINTS } from "@/lib/nodes";
 
 export async function GET(req: Request) {

@@ -1,15 +1,16 @@
-interface DashboardLayoutProps {
-  title: string;
-  subtitle: string;
-  children: React.ReactNode;
-}
+'use client'
 
-export function DashboardLayout({ title, subtitle, children }: DashboardLayoutProps) {
+export default function DashboardLayout({ children }) {
   return (
-    <div>
-      <h1>{title}</h1>
-      <p>{subtitle}</p>
+    <div style={{
+      display: "flex",
+      flexDirection: "column",
+      gap: "24px",
+      padding: "24px",
+      maxWidth: "900px",
+      margin: "0 auto"
+    }}>
       {children}
     </div>
-  );
+  )
 }

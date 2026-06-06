@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { addIncident, loadIncidents } from "@/lib/incidentStore";
 
 export async function GET() {

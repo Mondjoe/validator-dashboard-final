@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { ALLOWED_COMMANDS } from "@/lib/allowedCommands";
 import { exec } from "child_process";
 

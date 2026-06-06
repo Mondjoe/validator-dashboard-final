@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     const res = await fetch("https://toncenter.com/api/v2/getMasterchainInfo");

@@ -1,3 +1,17 @@
+const RPC_PROVIDERS: Record<string, string[]> = {
+  ethereum: [
+    `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`
+  ],
+  optimism: [
+    `https://opt-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`
+  ],
+  base: [
+    `https://base-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`
+  ],
+  xai: [
+    `https://xai-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`
+  ]
+};
 export async function rpcRequest(chain: string, body: any) {
   const providers = RPC_PROVIDERS[chain];
   if (!providers) throw new Error("Unknown chain");
@@ -10,16 +24,12 @@ export async function rpcRequest(chain: string, body: any) {
         body: JSON.stringify(body),
       });
 
-      if (!res.ok) continue;
-
-      const data = await res.json();
-      if (data.error) continue;
-
-      return { ok: true, provider: url, data };
-    } catch {
+      const json = await res.json();
+      return json;
+    } catch (err) {
       continue;
     }
   }
 
-  return { ok: false, provider: null, data: null };
+  throw new Error("All RPC providers failed");
 }

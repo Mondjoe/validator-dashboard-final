@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { diagnose } from "@/lib/diagnostics";
 
 export async function GET(req: Request) {

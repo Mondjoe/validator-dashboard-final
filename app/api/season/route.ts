@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { addSessionEvent } from "@/lib/incidentStore";
 
 export async function POST(req: Request) {

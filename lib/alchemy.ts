@@ -3,7 +3,7 @@
  * Fetches real blockchain data for NFTs, tokens, and transactions
  */
 
-const ALCHEMY_API_KEY = import.meta.env.VITE_ALCHEMY_API_KEY || 'demo';
+const ALCHEMY_API_KEY = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY || 'demo';
 const ALCHEMY_BASE_URL = `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}`;
 
 export interface AlchemyNFT {

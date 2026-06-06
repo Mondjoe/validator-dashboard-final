@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { rpcRequest } from "@/lib/rpcRouter";
 
 export async function POST(req: Request) {

@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     const res = await fetch("https://rpc.ankr.com/eth", {
