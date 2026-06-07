@@ -194,6 +194,31 @@ export default function Sidebar() {
           )}
         </button>
       </div>
+      import { Twitter, Send, Globe, Github } from 'lucide-react'; // lucide-react ကို install လုပ်ထားရပါမယ်
+
+const SocialLinks = () => {
+  return (
+    <div className="mt-auto px-4 py-6 border-t border-white/5 space-y-4">
+      <div className="flex justify-around items-center opacity-60 hover:opacity-100 transition-opacity">
+        <a href="https://x.com/charmfi" target="_blank" className="hover:text-[#2affff] transition-colors">
+          <Twitter size={20} />
+        </a>
+        <a href="https://t.me/charmfi" target="_blank" className="hover:text-[#2affff] transition-colors">
+          <Send size={20} />
+        </a>
+        <a href="https://github.com/Mondjoe" target="_blank" className="hover:text-[#2affff] transition-colors">
+          <Github size={20} />
+        </a>
+        <a href="https://charmcapsule.io" target="_blank" className="hover:text-[#2affff] transition-colors">
+          <Globe size={20} />
+        </a>
+      </div>
+      <div className="text-[10px] text-center text-white/20 font-mono uppercase tracking-widest">
+        Charm Capsule v1.0.4
+      </div>
+    </div>
+  );
+};
     </aside>
   );
 }
