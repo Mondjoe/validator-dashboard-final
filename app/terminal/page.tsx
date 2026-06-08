@@ -78,8 +78,4 @@ const TerminalPage = () => {
       </div>
     </div>
   );
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> 27bd87ea3799146df4710c381b5e3d6f63a79638
