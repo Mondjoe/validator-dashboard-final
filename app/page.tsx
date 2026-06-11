@@ -1,5 +1,9 @@
 'use client'
+import { redirect } from 'next/navigation';
 
+export default function Home() {
+  redirect('/dashboard');
+}
 import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import { fetchNFTs, fetchTokenBalances, fetchTransactions } from "../lib/alchemy";
