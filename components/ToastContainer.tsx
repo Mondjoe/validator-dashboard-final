@@ -1,9 +1,3 @@
-"use client";
-
-import { useToastStore } from "../hooks/store/toastStore";
-import { theme } from "../app/theme";
-import { useEffect } from "react";
-
 export function ToastContainer() {
   const { toasts, removeToast } = useToastStore();
 
@@ -13,6 +7,12 @@ export function ToastContainer() {
     );
     return () => timers.forEach(clearTimeout);
   }, [toasts]);
+
+  const colors = {
+    success: "#22c55e",
+    error: "#ef4444",
+    info: "#3b82f6",
+  };
 
   return (
     <div
