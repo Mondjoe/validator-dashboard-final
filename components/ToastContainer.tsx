@@ -31,20 +31,20 @@ color: colors[toast.type ?? "info"],
     >
       {toasts.map((toast) => (
         <div
-          key={toast.id}
-          style={{
-            padding: "12px 16px",
-            background: theme.colors.card,
-            borderRadius: theme.radius.md,
-            border: `1px solid ${colors[toast.type]}`,
-            color: colors[toast.type],
-            fontSize: theme.font.base,
-            minWidth: "220px",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-            transform: "translateY(0)",
-            transition: "all 0.25s ease",
-          }}
-        >
+  key={toast.id}
+  style={{
+    padding: "12px 16px",
+    background: theme.colors.card,
+    borderRadius: theme.radius.md,
+    border: `1px solid ${colors[toast.type ?? "info"]}`,
+    color: colors[toast.type ?? "info"],
+    fontSize: theme.font.base,
+    minWidth: "220px",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+    transform: "translateY(0)",
+    transition: "all 0.25s ease",
+  }}
+>
           {toast.message}
         </div>
       ))}
