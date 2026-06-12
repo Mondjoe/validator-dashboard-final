@@ -4,6 +4,7 @@ import { OperatorAlerts } from '@/components/OperatorAlerts';
 import { CommandPalette } from '@/components/CommandPalette';
 import { RewardAnalytics } from '@/components/RewardAnalytics';
 import { VALIDATORS } from '@/lib/validators';
+import ContractOwnership from "@/components/ContractOwnership";
 
 export default function DashboardPage() {
   const validator = VALIDATORS[0];
