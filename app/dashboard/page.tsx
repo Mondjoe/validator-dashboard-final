@@ -1,3 +1,4 @@
+import NftList from "@/components/NftList";
 import { ChainStatus } from '@/components/ChainStatus';
 import { OperatorAlerts } from '@/components/OperatorAlerts';
 import { CommandPalette } from '@/components/CommandPalette';
