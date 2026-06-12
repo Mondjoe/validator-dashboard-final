@@ -7,7 +7,8 @@ export async function GET(req: Request) {
 
   if (!chain) return Response.json({ error: "Missing chain" });
 
-  const nodes = NODE_ENDPOINTS[chain];
+ type Chain = keyof typeof NODE_ENDPOINTS;
+const nodes = NODE_ENDPOINTS[chain as Chain];
   if (!nodes) return Response.json({ error: "Unknown chain" });
 
   const results: any[] = [];
