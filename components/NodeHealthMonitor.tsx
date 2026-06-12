@@ -6,9 +6,15 @@ import { getTonNodeHealth } from "@/lib/nodeHealthTon";
 import { getTronNodeHealth } from "@/lib/nodeHealthTron";
 
 export function NodeHealthMonitor() {
-  const [eth, setEth] = useState(null);
-  const [ton, setTon] = useState(null);
-  const [tron, setTron] = useState(null);
+ type NodeHealth = {
+  status: any;
+  sync: any;
+  peers: any;
+};
+
+const [eth, setEth] = useState<NodeHealth | null>(null);
+const [ton, setTon] = useState<NodeHealth | null>(null);
+const [tron, setTron] = useState<NodeHealth | null>(null);
 
   async function load() {
     try { setEth(await getEthNodeHealth()); } catch {}
