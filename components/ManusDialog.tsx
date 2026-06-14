@@ -3,7 +3,11 @@ import React from "react";
 interface ManusDialogProps {
   title?: string;
   description?: string;
-  logo?: string;        // ← ADD THIS
+  logo?: string;
+  open?: boolean;          // ← ADD THIS
+  onLogin?: () => void;    // ← You are destructuring this too
+  onOpenChange?: (v: boolean) => void;  // ← You are destructuring this too
+  onClose?: () => void;    // ← You are destructuring this too
   children?: React.ReactNode;
 }
 
