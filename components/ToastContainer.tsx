@@ -1,3 +1,8 @@
+"use client";
+
+import { useToastStore } from "../hooks/store/toastStore";
+import { theme } from "../app/theme";
+import { useEffect } from "react";
 export function ToastContainer() {
   const { toasts, removeToast } = useToastStore();
 
