@@ -24,7 +24,12 @@ export function useChainStatus() {
       pingTron(),
     ]);
 
-    setStatus({ evm, solana: sol, ton, tron });
+   setStatus({
+  evm: evm ?? null,
+  solana: sol ?? null,
+  ton: ton ?? null,
+  tron: tron ?? null,
+});
   }
 
   useEffect(() => {
