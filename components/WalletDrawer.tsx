@@ -44,18 +44,8 @@ export default function WalletDrawer({ open, onClose }: any) {
           </button>
         </div>
 
-        {/* Solana */}
-        <div>
-          <h3 className="text-lg font-semibold mb-2 text-purple-400">Solana</h3>
-
-         <div>
-  <h3 className="text-lg font-semibold mb-2 text-purple-400">Solana</h3>
-  <div className="bg-[#111] p-3 rounded border border-purple-500/20 text-gray-400 text-sm">
-    Solana wallet support coming soon
-  </div>
-</div>
-
-         <div>
+ {/* Solana */}
+<div>
   <h3 className="text-lg font-semibold mb-2 text-purple-400">Solana</h3>
   <div className="bg-[#111] p-3 rounded border border-purple-500/20 text-gray-400 text-sm">
     Solana wallet support coming soon
