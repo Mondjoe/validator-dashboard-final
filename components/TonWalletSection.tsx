@@ -42,6 +42,12 @@ export function TonWalletSection() {
       <h2 className="text-xl mb-2">TON Wallet</h2>
 
       <TonConnectButton />
+   <div>
+  <h3 className="text-lg font-semibold mb-2 text-blue-400">EVM</h3>
+  <div className="bg-[#111] p-3 rounded border border-blue-500/20 text-gray-400 text-sm">
+    EVM wallet support coming soon
+  </div>
+</div>
 
       {address && (
         <div className="mt-3 text-sm space-y-1">
