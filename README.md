@@ -1,138 +1,288 @@
-# Validator Dashboard Final
+README.md---
 
-A fully featured **EVM + L2 + ZK multi‑chain validator dashboard** built with **Next.js 14**, designed for clean UI, modular components, and mobile‑first workflows. This project is maintained by **Charmjoe**, integrating chain logos, RPC utilities, and a structured dashboard interface.
+ CharmCapsule Backend  Full Merged README
 
----
-
-## Overview
-Validator Dashboard Final provides a unified interface for interacting with multiple blockchain networks across the EVM ecosystem. It is optimized    # Charm Capsule
-   By the team behind Charm Finance (2020 AMM)
-   Live: https://charmcapsule.io
-   Telegram: https://t.me/charmfi
-   X: https://x.com/charmfi
-   Contact: Charmjoe71@outlook.com
-
-- Mobile‑first development  
-- Clean architecture  
-- Extendability  
-- Multi‑chain support  
-- RPC‑based data fetching  
-
-The project uses:
-- **Next.js 14 (App Router)**
-- **React 18**
-- **EVM RPC utilities**
-- **Chain selector UI**
-- **Wallet card UI**
-- **Public asset system for chain logos**
+ Overview
+CharmCapsule Backend is a NestJS API system designed for secure authentication, password hashing, modular service expansion, and Termuxfriendly development.  
+It uses bcryptjs to avoid native build failures and is part of the CharmCapsule Web3 Infrastructure built by Charm_Capsule.
 
 ---
 
-## Features
-- Multi‑chain dashboard interface  
-- Chain selector with logos  
-- Wallet card component  
-- RPC utilities for fetching data  
-- Clean modular folder structure  
-- Mobile‑friendly layout  
-- Ready for deployment on Vercel  
+ Architecture
+`
+src/
+  app.module.ts
+  app.controller.ts
+  app.service.ts
+  modules/
+       user/
+            user.module.ts
+            user.controller.ts
+            user.service.ts
+`
 
 ---
 
-## Supported Chains
-This dashboard supports the following 10 chains:
-
-- Ethereum  
-- Optimism  
-- Arbitrum  
-- Base  
-- Polygon  
-- BNB Chain  
-- Solana  
-- Avalanche  
-- zkSync  
-- Scroll  
-
-Each chain includes a corresponding logo stored in `public/logos/`.
+ Tech Stack
+- NestJS  
+- TypeScript  
+- pnpm  
+- bcryptjs  
+- Node.js 20+ / 26  
+- Termux compatible  
 
 ---
 
-## Project Structure
-validator-dashboard-final/
-├── app/
-│   ├── api/
-│   ├── dashboard/
-│   ├── globals.css
-│   └── layout.js
-├── components/
-│   ├── ChainSelector.js
-│   └── WalletCard.js
-├── lib/
-│   ├── format.js
-│   └── rpc.js
-├── public/
-│   └── logos/
-│       ├── ethereum.png
-│       ├── optimism.png
-│       ├── arbitrum.png
-│       ├── base.png
-│       ├── polygon.png
-│       ├── bnb.png
-│       ├── solana.png
-│       ├── avalanche.png
-│       ├── zksync.png
-│       └── scroll.png
-├── next.config.js
-└── package.json
----
+ Installation
+`
+pnpm install
+`
 
-## Installation
-1. Clone the repository:
+Run development server:
+`
+pnpm dev
+`
 
-2. Install dependencies:
-
-3. Run the development server:
-
-4. Open the dashboard:
+Build for production:
+`
+pnpm build
+pnpm start
+`
 
 ---
 
-## Deployment
-This project is optimized for **Vercel**.
+ Password Hashing (bcryptjs)
+These are code examples, not terminal commands.
 
-To deploy:
-1. Push your repository to GitHub  
-2. Connect the repo to Vercel  
-3. Deploy with default settings  
+Hash password:
+`
+bcrypt.hash(password, 10)
+`
 
-Your dashboard will be available at:
+Compare password:
+`
+bcrypt.compare(password, hashed)
+`
 
----
-
-## Roadmap
-- Add wallet connection module  
-- Add validator statistics  
-- Add tokenomics page  
-- Add governance module  
-- Add animations and UI enhancements  
-- Add more chains if needed  
+bcryptjs is used because it avoids native compilation and works perfectly on Termux.
 
 ---
 
-## Author
-**Charmjoe**  
-GitHub: https://github.com/Charmjoe
+ Health Check
+GET /  
+Response:  
+`
+Backend is running
+`
 
 ---
 
-## License
-This project is private and not licensed for public distribution.
-## 🛡️ Operator Identity — Dark Warrior Map
+ API Table
 
-**Operator:** Charm Joe  
-**Identity Mode:** Dark Warrior  
-**Ecosystem:** Charm Capsule · Validator DB · FutureVictoryGov · Check-In Engine  
-**Chains:** ETH · SOL · TRON · TON · BASE · BNB · OP · ARB  
+| Endpoint | Method | Description | Body / Params |
+|--------------|------------|------------------|--------------------|
+| / | GET | Health check | None |
+| /user/register | POST | Register new user | { username, password } |
+| /user/login | POST | Login user | { username, password } |
+| /user/hash-test | POST | Hash password (dev only) | { password } |
+| /user/compare-test | POST | Compare password (dev only) | { password, hash } |
 
-A unified operator identity spanning chains, dashboards, proofs, contracts, and contributor history.  
-Built for clarity. Designed for sovereignty. Anchored across ecosystems.
+---
+
+ Swagger / OpenAPI Spec
+
+`yaml
+openapi: 3.0.0
+info:
+  title: CharmCapsule Backend API
+  version: 1.0.0
+  description: API documentation for CharmCapsule NestJS backend.
+
+paths:
+  /:
+    get:
+      summary: Health Check
+      responses:
+        '200':
+          description: Backend is running
+
+  /user/register:
+    post:
+      summary: Register new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: User registered
+
+  /user/login:
+    post:
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Login successful
+
+  /user/hash-test:
+    post:
+      summary: Hash password (dev only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Hashed password returned
+
+  /user/compare-test:
+    post:
+      summary: Compare password (dev only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                hash:
+                  type: string
+      responses:
+        '200':
+          description: Compare result returned
+`
+
+Enable Swagger in NestJS
+Add this to main.ts:
+
+`ts
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+
+const config = new DocumentBuilder()
+  .setTitle('CharmCapsule API')
+  .setDescription('CharmCapsule Backend API Documentation')
+  .setVersion('1.0')
+  .build();
+
+const document = SwaggerModule.createDocument(app, config);
+SwaggerModule.setup('docs', app, document);
+`
+
+Open Swagger UI:  
+`
+http://localhost:3000/docs
+`
+
+---
+
+ Environment Variables (Env Vars)
+
+Create a file named .env in your project root.
+
+Common Variables
+
+| Variable | Description | Example |
+|---------|-------------|---------|
+| PORT | Backend port | 3000 |
+| NODE_ENV | Environment mode | development / production |
+| JWT_SECRET | JWT signing key | yoursecretkeyhere |
+| DB_URL | Database connection string | postgres://user:pass@host:5432/dbname |
+| HASH_SALT | bcryptjs salt rounds | 10 |
+
+Example .env
+
+`
+PORT=3000
+NODE_ENV=development
+
+JWT_SECRET=supersecretkey123
+HASH_SALT=10
+
+DB_URL=postgres://postgres:password@localhost:5432/charmcapsule
+`
+
+Load Env Vars in NestJS
+
+`ts
+import { ConfigModule } from '@nestjs/config';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+  ],
+})
+export class AppModule {}
+`
+
+Access anywhere:
+
+`ts
+constructor(private config: ConfigService) {}
+
+const secret = this.config.get('JWT_SECRET');
+`
+
+Security
+- Never commit .env  
+- Add .env to .gitignore  
+- Use env vars for all secrets  
+
+---
+
+ Troubleshooting
+
+pnpm dev not found
+Add "dev" script to package.json.
+
+bcrypt build error
+Use bcryptjs instead of bcrypt.  
+Then:
+
+`
+rm -rf node_modules
+rm pnpm-lock.yaml
+pnpm install
+`
+
+Termux repo issues
+`
+termux-change-repo
+`
+
+---
+
+ CharmCapsule Identity
+CharmCapsule Backend is part of the CharmCapsule Web3 Ecosystem, architected and maintained by Charm_Capsule, delivering secure, scalable, and elegant digital systems.
+
+---
+
+ License
+Owned and maintained by CharmCapsule(Mondjoe)
+---
