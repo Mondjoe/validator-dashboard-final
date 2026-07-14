@@ -1,82 +1,78 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import { useState } from "react";
 
-const TerminalPage = () => {
-  const [input, setInput] = useState('');
-  const [history, setHistory] = useState([
-    { type: 'system', text: 'Charm Capsule OS [Version 1.0.4]' },
-    { type: 'system', text: '(c) 2026 Charm Finance. All rights reserved.' },
-    { type: 'system', text: 'Type "help" to see available commands.' },
-    { type: 'system', text: '' },
-  ]);
-  const bottomRef = useRef<HTMLDivElement>(null);
+export default function Page() {
+  const [input, setInput] = useState("");
+  const [history, setHistory] = useState<string[]>([]);
 
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [history]);
+  const runCommand = (cmd: string) => {
+    const lower = cmd.toLowerCase();
 
-  const handleCommand = (e: React.FormEvent) => {
+    if (lower === "help") {
+      return "Available commands: help, clear, identity, chains, status";
+    }
+
+    if (lower === "clear") {
+      setHistory([]);
+      return "";
+    }
+
+    if (lower === "identity") {
+      return "Operator Identity: CharmCapsule → Charm Operator → Mondjoe → Triopath → Heinhtat → Mr.j";
+    }
+
+    if (lower === "chains") {
+      return "Active Chains: Ethereum, TON, Solana, Sui";
+    }
+
+    if (lower === "status") {
+      return "System Status: All modules online. No incidents.";
+    }
+
+    return `Unknown command: ${cmd}`;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
 
-    const newHistory = [...history, { type: 'user', text: `> ${input}` }];
-    const cmd = input.toLowerCase().trim();
-
-    if (cmd === 'help') {
-      newHistory.push({ type: 'system', text: 'Available commands: help, status, portfolio, clear, connect, exit' });
-    } else if (cmd === 'status') {
-      newHistory.push({ type: 'system', text: 'All systems operational. Node: Charm-Alpha-01 connected.' });
-    } else if (cmd === 'portfolio') {
-      newHistory.push({ type: 'system', text: 'Fetching balance... Total: 1.24 ETH ($3,968.00)' });
-    } else if (cmd === 'clear') {
-      setHistory([]);
-      setInput('');
-      return;
+    const output = runCommand(input.trim());
+    if (output !== "") {
+      setHistory((prev) => [...prev, `> ${input}`, output]);
     } else {
-      newHistory.push({ type: 'error', text: `Command not found: ${cmd}` });
+      setHistory((prev) => [...prev, `> ${input}`]);
     }
 
-    setHistory(newHistory);
-    setInput('');
+    setInput("");
   };
 
   return (
-    <div className="p-6 bg-[#0d0d0d] min-h-screen font-mono text-green-400">
-      <div className="mb-6 border-b border-green-900 pb-4">
-        <h1 className="text-xl font-bold flex items-center gap-2">
-          <span className="animate-pulse">●</span> Charm Terminal v1.0
-        </h1>
-      </div>
+    <div className="p-6 text-white">
+      <h1 className="text-2xl font-bold mb-4">Operator Terminal</h1>
 
-      <div className="bg-black/50 border border-green-900/30 p-4 rounded-lg h-[60vh] overflow-y-auto mb-4 scrollbar-hide">
+      <div className="border border-gray-700 rounded-lg p-4 h-[500px] overflow-y-auto bg-black/40">
         {history.map((line, i) => (
-          <div key={i} className={`mb-1 ${line.type === 'error' ? 'text-red-400' : line.type === 'user' ? 'text-white' : 'text-green-400/80'}`}>
-            {line.text}
+          <div key={i} className="text-gray-300 mb-1">
+            {line}
           </div>
         ))}
-        <div ref={bottomRef} />
       </div>
 
-      <form onSubmit={handleCommand} className="flex gap-2 items-center bg-black/80 p-3 rounded border border-green-900/50">
-        <span className="text-white">$</span>
+      <form onSubmit={handleSubmit} className="mt-4 flex gap-2">
         <input
-          type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="bg-transparent border-none outline-none text-white w-full"
-          autoFocus
-          placeholder="Enter command..."
+          className="flex-1 bg-black border border-gray-700 rounded px-3 py-2 text-white"
+          placeholder="Type a command…"
         />
+        <button
+          type="submit"
+          className="px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white"
+        >
+          Run
+        </button>
       </form>
-
-      <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 opacity-60">
-        <div className="text-xs border border-green-900/20 p-2 rounded">CPU: 12%</div>
-        <div className="text-xs border border-green-900/20 p-2 rounded">MEM: 1.2GB</div>
-        <div className="text-xs border border-green-900/20 p-2 rounded">NET: 128ms</div>
-        <div className="text-xs border border-green-900/20 p-2 rounded">UPTIME: 42d</div>
-      </div>
     </div>
   );
-};
-export default TerminalPage;
+}
