@@ -18,12 +18,10 @@ export default function Sidebar() {
       <nav className="flex flex-col gap-4 text-sm">
         <Link href="/" className={linkClass("/")}>Home</Link>
         <Link href="/dashboard" className={linkClass("/dashboard")}>Dashboard</Link>
-        <Link href="/validator" className={linkClass("/validator")}>Validator</Link>
+        <Link href="/validators" className={linkClass("/validators")}>Validator</Link>
         <Link href="/wallet" className={linkClass("/wallet")}>Wallet</Link>
-        <Link href="/multichain" className={linkClass("/multichain")}>Multichain</Link>
-        <Link href="/liquidity" className={linkClass("/liquidity")}>Liquidity</Link>
-        <Link href="/identity" className={linkClass("/identity")}>Identity</Link>
-        <Link href="/dao" className={linkClass("/dao")}>DAO</Link>
+        <Link href="/settings" className={linkClass("/settings")}>Settings</Link>
+        <Link href="/terminal" className={linkClass("/terminal")}>Terminal</Link>
       </nav>
     </aside>
   );
