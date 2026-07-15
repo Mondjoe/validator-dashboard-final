@@ -9,25 +9,98 @@ export default function Page() {
   const runCommand = (cmd: string) => {
     const lower = cmd.toLowerCase();
 
+    // HELP
     if (lower === "help") {
-      return "Available commands: help, clear, identity, chains, status";
+      return `
+Available commands:
+help, clear, identity, chains, status,
+eth, ton, solana, sui,
+rpc, balance <chain>, network <chain>
+`;
     }
 
+    // CLEAR
     if (lower === "clear") {
       setHistory([]);
       return "";
     }
 
+    // IDENTITY
     if (lower === "identity") {
       return "Operator Identity: CharmCapsule → Charm Operator → Mondjoe → Triopath → Heinhtat → Mr.j";
     }
 
+    // CHAINS
     if (lower === "chains") {
       return "Active Chains: Ethereum, TON, Solana, Sui";
     }
 
+    // STATUS
     if (lower === "status") {
       return "System Status: All modules online. No incidents.";
+    }
+
+    // ETH
+    if (lower === "eth") {
+      return `
+Ethereum Mainnet:
+Chain ID: 1
+RPC: https://eth.llamarpc.com
+Status: Online
+`;
+    }
+
+    // TON
+    if (lower === "ton") {
+      return `
+TON Network:
+Chain: TON Mainnet
+RPC: https://toncenter.com/api/v2/jsonRPC
+Status: Online
+`;
+    }
+
+    // SOLANA
+    if (lower === "solana") {
+      return `
+Solana Mainnet:
+Cluster: mainnet-beta
+RPC: https://api.mainnet-beta.solana.com
+Status: Online
+`;
+    }
+
+    // SUI
+    if (lower === "sui") {
+      return `
+Sui Network:
+Chain: Sui Mainnet
+RPC: https://fullnode.mainnet.sui.io
+Status: Online
+`;
+    }
+
+    // RPC LIST
+    if (lower === "rpc") {
+      return `
+RPC Endpoints:
+ETH → https://eth.llamarpc.com
+TON → https://toncenter.com/api/v2/jsonRPC
+SOLANA → https://api.mainnet-beta.solana.com
+SUI → https://fullnode.mainnet.sui.io
+`;
+    }
+
+    // BALANCE <chain>
+    if (lower.startsWith("balance ")) {
+      const chain = lower.split(" ")[1];
+      return `Balance check for ${chain}: (placeholder — connect wallet module)`;
+    }
+
+    // NETWORK <chain>
+    if (lower.startsWith("network ")) {
+      const chain = lower.split(" ")[1];
+      return `Network status for ${chain}: Online (placeholder — connect chain health API)`;
     }
 
     return `Unknown command: ${cmd}`;
@@ -53,7 +126,7 @@ export default function Page() {
 
       <div className="border border-gray-700 rounded-lg p-4 h-[500px] overflow-y-auto bg-black/40">
         {history.map((line, i) => (
-          <div key={i} className="text-gray-300 mb-1">
+          <div key={i} className="text-gray-300 whitespace-pre-line mb-1">
             {line}
           </div>
         ))}
