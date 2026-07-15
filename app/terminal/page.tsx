@@ -1,23 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { TonConnectUI, useTonConnectUI } from "@tonconnect/ui-react";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { PublicKey } from "@solana/web3.js";
 
 export default function Page() {
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
 
-  // TON Connect
-  const [tonConnectUI] = useTonConnectUI();
+  // Solana wallet hooks
+  const { connection } = useConnection();
+  const { publicKey, connected, connect, disconnect } = useWallet();
 
-  const tonAddress =
-    tonConnectUI.account?.address ?? null;
-
-  const tonBalance =
-    tonConnectUI.account?.balance ?? null;
-
-  const isTonConnected =
-    tonConnectUI.account !== null;
+  const getSolBalance = async () => {
+    if (!publicKey) return null;
+    const lamports = await connection.getBalance(publicKey);
+    return lamports / 1_000_000_000; // SOL
+  };
 
   const runCommand = async (cmd: string) => {
     const lower = cmd.toLowerCase();
@@ -26,86 +25,56 @@ export default function Page() {
     if (lower === "help") {
       return `
 Available commands:
-help, clear, identity, chains, status,
-eth, ton, solana, sui,
-rpc, balance <chain>, network <chain>,
-wallet, wallet chains, wallet info,
-wallet connect eth, wallet connect ton,
-wallet address eth, wallet address ton,
-wallet balance eth, wallet balance ton,
-wallet disconnect
+wallet connect solana, wallet address solana,
+wallet balance solana, wallet disconnect,
+solana
 `;
     }
 
-    // CLEAR
-    if (lower === "clear") {
-      setHistory([]);
-      return "";
-    }
-
-    // IDENTITY
-    if (lower === "identity") {
-      return "Operator Identity: CharmCapsule → Charm Operator → Mondjoe → Triopath → Heinhtat → Mr.j";
-    }
-
-    // CHAINS
-    if (lower === "chains") {
-      return "Active Chains: Ethereum, TON, Solana, Sui";
-    }
-
-    // TON CHAIN INFO
-    if (lower === "ton") {
+    // SOLANA CHAIN INFO
+    if (lower === "solana") {
       return `
-TON Network:
-Chain: TON Mainnet
-RPC: https://toncenter.com/api/v2/jsonRPC
+Solana Mainnet:
+Cluster: mainnet-beta
+RPC: https://api.mainnet-beta.solana.com
 Status: Online
 `;
     }
 
-    // WALLET ROOT
-    if (lower === "wallet") {
-      return `
-Wallet Module:
-ETH Connected: —
-TON Connected: ${isTonConnected ? "Yes" : "No"}
-TON Address: ${tonAddress ?? "—"}
-`;
-    }
-
-    // WALLET CONNECT TON
-    if (lower === "wallet connect ton") {
+    // WALLET CONNECT SOLANA
+    if (lower === "wallet connect solana") {
       try {
-        await tonConnectUI.connectWallet();
+        await connect();
         return `
-TON Wallet Connected:
-Address: ${tonAddress ?? "(fetching...)"}
+Solana Wallet Connected:
+Address: ${publicKey?.toBase58() ?? "(fetching...)"}
 `;
       } catch {
-        return "TON Connect Error: No TON wallet found.";
+        return "Solana Connect Error: No wallet found.";
       }
     }
 
-    // WALLET ADDRESS TON
-    if (lower === "wallet address ton") {
+    // WALLET ADDRESS SOLANA
+    if (lower === "wallet address solana") {
       return `
-TON Wallet Address:
-${tonAddress ?? "Not connected"}
+Solana Wallet Address:
+${publicKey?.toBase58() ?? "Not connected"}
 `;
     }
 
-    // WALLET BALANCE TON
-    if (lower === "wallet balance ton") {
-      if (!isTonConnected) return "TON wallet not connected.";
+    // WALLET BALANCE SOLANA
+    if (lower === "wallet balance solana") {
+      if (!connected) return "Solana wallet not connected.";
+      const sol = await getSolBalance();
       return `
-TON Balance:
-${tonBalance ?? "Loading..."} TON
+Solana Balance:
+${sol} SOL
 `;
     }
 
     // WALLET DISCONNECT
     if (lower === "wallet disconnect") {
-      tonConnectUI.disconnect();
+      disconnect();
       return "Wallet disconnected successfully.";
     }
 
@@ -117,19 +86,12 @@ ${tonBalance ?? "Loading..."} TON
     if (!input.trim()) return;
 
     const output = await runCommand(input.trim());
-    if (output !== "") {
-      setHistory((prev) => [...prev, `> ${input}`, output]);
-    } else {
-      setHistory((prev) => [...prev, `> ${input}`]);
-    }
-
+    setHistory((prev) => [...prev, `> ${input}`, output]);
     setInput("");
   };
 
   return (
     <div className="p-6 text-white">
-      <TonConnectUI />
-
       <h1 className="text-2xl font-bold mb-4">Operator Terminal</h1>
 
       <div className="border border-gray-700 rounded-lg p-4 h-[500px] overflow-y-auto bg-black/40">
