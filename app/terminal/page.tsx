@@ -15,7 +15,10 @@ export default function Page() {
 Available commands:
 help, clear, identity, chains, status,
 eth, ton, solana, sui,
-rpc, balance <chain>, network <chain>
+rpc, balance <chain>, network <chain>,
+wallet, wallet chains, wallet info,
+wallet address <chain>, wallet balance <chain>,
+wallet connect, wallet disconnect
 `;
     }
 
@@ -101,6 +104,61 @@ SUI → https://fullnode.mainnet.sui.io
     if (lower.startsWith("network ")) {
       const chain = lower.split(" ")[1];
       return `Network status for ${chain}: Online (placeholder — connect chain health API)`;
+    }
+
+    // WALLET ROOT
+    if (lower === "wallet") {
+      return `
+Wallet Module:
+Status: Not connected
+Use: wallet connect
+`;
+    }
+
+    // WALLET CHAINS
+    if (lower === "wallet chains") {
+      return `
+Supported Wallet Chains:
+ETH, TON, SOLANA, SUI
+`;
+    }
+
+    // WALLET INFO
+    if (lower === "wallet info") {
+      return `
+Wallet Info:
+Status: Not connected
+Address: —
+Chains: ETH, TON, SOLANA, SUI
+`;
+    }
+
+    // WALLET ADDRESS <chain>
+    if (lower.startsWith("wallet address ")) {
+      const chain = lower.split(" ")[2];
+      return `Wallet address for ${chain}: (placeholder — integrate wallet adapter)`;
+    }
+
+    // WALLET BALANCE <chain>
+    if (lower.startsWith("wallet balance ")) {
+      const chain = lower.split(" ")[2];
+      return `Wallet balance for ${chain}: (placeholder — integrate wallet balance API)`;
+    }
+
+    // WALLET CONNECT
+    if (lower === "wallet connect") {
+      return `
+Wallet Connect:
+(placeholder — integrate wagmi, tonconnect, solana adapter, sui wallet)
+`;
+    }
+
+    // WALLET DISCONNECT
+    if (lower === "wallet disconnect") {
+      return `
+Wallet Disconnect:
+Wallet disconnected successfully.
+`;
     }
 
     return `Unknown command: ${cmd}`;
