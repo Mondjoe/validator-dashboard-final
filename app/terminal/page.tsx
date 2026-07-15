@@ -1,25 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { useAccount, useBalance, useConnect, useDisconnect } from "wagmi";
-import { injected } from "wagmi/connectors";
+import { TonConnectUI, useTonConnectUI } from "@tonconnect/ui-react";
 
 export default function Page() {
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
 
-  // Wagmi hooks
-  const { address, isConnected } = useAccount();
-  const { disconnect } = useDisconnect();
-  const { connect } = useConnect({
-    connector: injected(),
-  });
+  // TON Connect
+  const [tonConnectUI] = useTonConnectUI();
 
-  const { data: ethBalance } = useBalance({
-    address,
-    chainId: 1,
-    enabled: isConnected,
-  });
+  const tonAddress =
+    tonConnectUI.account?.address ?? null;
+
+  const tonBalance =
+    tonConnectUI.account?.balance ?? null;
+
+  const isTonConnected =
+    tonConnectUI.account !== null;
 
   const runCommand = async (cmd: string) => {
     const lower = cmd.toLowerCase();
@@ -29,9 +27,13 @@ export default function Page() {
       return `
 Available commands:
 help, clear, identity, chains, status,
-eth, rpc, network eth,
-wallet, wallet connect eth, wallet disconnect,
-wallet address eth, wallet balance eth
+eth, ton, solana, sui,
+rpc, balance <chain>, network <chain>,
+wallet, wallet chains, wallet info,
+wallet connect eth, wallet connect ton,
+wallet address eth, wallet address ton,
+wallet balance eth, wallet balance ton,
+wallet disconnect
 `;
     }
 
@@ -51,34 +53,12 @@ wallet address eth, wallet balance eth
       return "Active Chains: Ethereum, TON, Solana, Sui";
     }
 
-    // STATUS
-    if (lower === "status") {
-      return "System Status: All modules online. No incidents.";
-    }
-
-    // ETH CHAIN INFO
-    if (lower === "eth") {
+    // TON CHAIN INFO
+    if (lower === "ton") {
       return `
-Ethereum Mainnet:
-Chain ID: 1
-RPC: https://eth.llamarpc.com
-Status: Online
-`;
-    }
-
-    // RPC LIST
-    if (lower === "rpc") {
-      return `
-RPC Endpoints:
-ETH → https://eth.llamarpc.com
-`;
-    }
-
-    // NETWORK ETH
-    if (lower === "network eth") {
-      return `
-Ethereum Network:
-Chain ID: 1
+TON Network:
+Chain: TON Mainnet
+RPC: https://toncenter.com/api/v2/jsonRPC
 Status: Online
 `;
     }
@@ -87,45 +67,46 @@ Status: Online
     if (lower === "wallet") {
       return `
 Wallet Module:
-Status: ${isConnected ? "Connected" : "Not connected"}
-Address: ${address ?? "—"}
+ETH Connected: —
+TON Connected: ${isTonConnected ? "Yes" : "No"}
+TON Address: ${tonAddress ?? "—"}
 `;
     }
 
-    // WALLET CONNECT ETH
-    if (lower === "wallet connect eth") {
+    // WALLET CONNECT TON
+    if (lower === "wallet connect ton") {
       try {
-        await connect();
+        await tonConnectUI.connectWallet();
         return `
-ETH Wallet Connected:
-Address: ${address ?? "(fetching...)"}
+TON Wallet Connected:
+Address: ${tonAddress ?? "(fetching...)"}
 `;
       } catch {
-        return "Wallet Connect Error: No injected wallet found.";
+        return "TON Connect Error: No TON wallet found.";
       }
+    }
+
+    // WALLET ADDRESS TON
+    if (lower === "wallet address ton") {
+      return `
+TON Wallet Address:
+${tonAddress ?? "Not connected"}
+`;
+    }
+
+    // WALLET BALANCE TON
+    if (lower === "wallet balance ton") {
+      if (!isTonConnected) return "TON wallet not connected.";
+      return `
+TON Balance:
+${tonBalance ?? "Loading..."} TON
+`;
     }
 
     // WALLET DISCONNECT
     if (lower === "wallet disconnect") {
-      disconnect();
+      tonConnectUI.disconnect();
       return "Wallet disconnected successfully.";
-    }
-
-    // WALLET ADDRESS ETH
-    if (lower === "wallet address eth") {
-      return `
-ETH Wallet Address:
-${address ?? "Not connected"}
-`;
-    }
-
-    // WALLET BALANCE ETH
-    if (lower === "wallet balance eth") {
-      if (!isConnected) return "Wallet not connected.";
-      return `
-ETH Balance:
-${ethBalance?.formatted ?? "Loading..."} ETH
-`;
     }
 
     return `Unknown command: ${cmd}`;
@@ -147,6 +128,8 @@ ${ethBalance?.formatted ?? "Loading..."} ETH
 
   return (
     <div className="p-6 text-white">
+      <TonConnectUI />
+
       <h1 className="text-2xl font-bold mb-4">Operator Terminal</h1>
 
       <div className="border border-gray-700 rounded-lg p-4 h-[500px] overflow-y-auto bg-black/40">
