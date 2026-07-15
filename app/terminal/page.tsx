@@ -1,12 +1,27 @@
 "use client";
 
 import { useState } from "react";
+import { useAccount, useBalance, useConnect, useDisconnect } from "wagmi";
+import { injected } from "wagmi/connectors";
 
 export default function Page() {
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
 
-  const runCommand = (cmd: string) => {
+  // Wagmi hooks
+  const { address, isConnected } = useAccount();
+  const { disconnect } = useDisconnect();
+  const { connect } = useConnect({
+    connector: injected(),
+  });
+
+  const { data: ethBalance } = useBalance({
+    address,
+    chainId: 1,
+    enabled: isConnected,
+  });
+
+  const runCommand = async (cmd: string) => {
     const lower = cmd.toLowerCase();
 
     // HELP
@@ -14,11 +29,9 @@ export default function Page() {
       return `
 Available commands:
 help, clear, identity, chains, status,
-eth, ton, solana, sui,
-rpc, balance <chain>, network <chain>,
-wallet, wallet chains, wallet info,
-wallet address <chain>, wallet balance <chain>,
-wallet connect, wallet disconnect
+eth, rpc, network eth,
+wallet, wallet connect eth, wallet disconnect,
+wallet address eth, wallet balance eth
 `;
     }
 
@@ -43,7 +56,7 @@ wallet connect, wallet disconnect
       return "System Status: All modules online. No incidents.";
     }
 
-    // ETH
+    // ETH CHAIN INFO
     if (lower === "eth") {
       return `
 Ethereum Mainnet:
@@ -53,122 +66,76 @@ Status: Online
 `;
     }
 
-    // TON
-    if (lower === "ton") {
-      return `
-TON Network:
-Chain: TON Mainnet
-RPC: https://toncenter.com/api/v2/jsonRPC
-Status: Online
-`;
-    }
-
-    // SOLANA
-    if (lower === "solana") {
-      return `
-Solana Mainnet:
-Cluster: mainnet-beta
-RPC: https://api.mainnet-beta.solana.com
-Status: Online
-`;
-    }
-
-    // SUI
-    if (lower === "sui") {
-      return `
-Sui Network:
-Chain: Sui Mainnet
-RPC: https://fullnode.mainnet.sui.io
-Status: Online
-`;
-    }
-
     // RPC LIST
     if (lower === "rpc") {
       return `
 RPC Endpoints:
 ETH → https://eth.llamarpc.com
-TON → https://toncenter.com/api/v2/jsonRPC
-SOLANA → https://api.mainnet-beta.solana.com
-SUI → https://fullnode.mainnet.sui.io
 `;
     }
 
-    // BALANCE <chain>
-    if (lower.startsWith("balance ")) {
-      const chain = lower.split(" ")[1];
-      return `Balance check for ${chain}: (placeholder — connect wallet module)`;
-    }
-
-    // NETWORK <chain>
-    if (lower.startsWith("network ")) {
-      const chain = lower.split(" ")[1];
-      return `Network status for ${chain}: Online (placeholder — connect chain health API)`;
+    // NETWORK ETH
+    if (lower === "network eth") {
+      return `
+Ethereum Network:
+Chain ID: 1
+Status: Online
+`;
     }
 
     // WALLET ROOT
     if (lower === "wallet") {
       return `
 Wallet Module:
-Status: Not connected
-Use: wallet connect
+Status: ${isConnected ? "Connected" : "Not connected"}
+Address: ${address ?? "—"}
 `;
     }
 
-    // WALLET CHAINS
-    if (lower === "wallet chains") {
-      return `
-Supported Wallet Chains:
-ETH, TON, SOLANA, SUI
+    // WALLET CONNECT ETH
+    if (lower === "wallet connect eth") {
+      try {
+        await connect();
+        return `
+ETH Wallet Connected:
+Address: ${address ?? "(fetching...)"}
 `;
-    }
-
-    // WALLET INFO
-    if (lower === "wallet info") {
-      return `
-Wallet Info:
-Status: Not connected
-Address: —
-Chains: ETH, TON, SOLANA, SUI
-`;
-    }
-
-    // WALLET ADDRESS <chain>
-    if (lower.startsWith("wallet address ")) {
-      const chain = lower.split(" ")[2];
-      return `Wallet address for ${chain}: (placeholder — integrate wallet adapter)`;
-    }
-
-    // WALLET BALANCE <chain>
-    if (lower.startsWith("wallet balance ")) {
-      const chain = lower.split(" ")[2];
-      return `Wallet balance for ${chain}: (placeholder — integrate wallet balance API)`;
-    }
-
-    // WALLET CONNECT
-    if (lower === "wallet connect") {
-      return `
-Wallet Connect:
-(placeholder — integrate wagmi, tonconnect, solana adapter, sui wallet)
-`;
+      } catch {
+        return "Wallet Connect Error: No injected wallet found.";
+      }
     }
 
     // WALLET DISCONNECT
     if (lower === "wallet disconnect") {
+      disconnect();
+      return "Wallet disconnected successfully.";
+    }
+
+    // WALLET ADDRESS ETH
+    if (lower === "wallet address eth") {
       return `
-Wallet Disconnect:
-Wallet disconnected successfully.
+ETH Wallet Address:
+${address ?? "Not connected"}
+`;
+    }
+
+    // WALLET BALANCE ETH
+    if (lower === "wallet balance eth") {
+      if (!isConnected) return "Wallet not connected.";
+      return `
+ETH Balance:
+${ethBalance?.formatted ?? "Loading..."} ETH
 `;
     }
 
     return `Unknown command: ${cmd}`;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
 
-    const output = runCommand(input.trim());
+    const output = await runCommand(input.trim());
     if (output !== "") {
       setHistory((prev) => [...prev, `> ${input}`, output]);
     } else {
