@@ -2,20 +2,18 @@
 
 import { useState } from "react";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { PublicKey } from "@solana/web3.js";
 
 export default function Page() {
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
 
-  // Solana wallet hooks
   const { connection } = useConnection();
   const { publicKey, connected, connect, disconnect } = useWallet();
 
   const getSolBalance = async () => {
     if (!publicKey) return null;
     const lamports = await connection.getBalance(publicKey);
-    return lamports / 1_000_000_000; // SOL
+    return lamports / 1_000_000_000;
   };
 
   const runCommand = async (cmd: string) => {
@@ -25,9 +23,12 @@ export default function Page() {
     if (lower === "help") {
       return `
 Available commands:
-wallet connect solana, wallet address solana,
-wallet balance solana, wallet disconnect,
 solana
+wallet connect solana
+wallet address solana
+wallet balance solana
+wallet status
+wallet disconnect
 `;
     }
 
@@ -41,7 +42,7 @@ Status: Online
 `;
     }
 
-    // WALLET CONNECT SOLANA
+    // WALLET CONNECT
     if (lower === "wallet connect solana") {
       try {
         await connect();
@@ -54,7 +55,7 @@ Address: ${publicKey?.toBase58() ?? "(fetching...)"}
       }
     }
 
-    // WALLET ADDRESS SOLANA
+    // WALLET ADDRESS
     if (lower === "wallet address solana") {
       return `
 Solana Wallet Address:
@@ -62,13 +63,27 @@ ${publicKey?.toBase58() ?? "Not connected"}
 `;
     }
 
-    // WALLET BALANCE SOLANA
+    // WALLET BALANCE
     if (lower === "wallet balance solana") {
       if (!connected) return "Solana wallet not connected.";
       const sol = await getSolBalance();
       return `
 Solana Balance:
 ${sol} SOL
+`;
+    }
+
+    // WALLET STATUS (FIXED)
+    if (lower === "wallet status") {
+      const solAddress = publicKey?.toBase58() ?? "Not connected";
+      const solBalance = connected ? await getSolBalance() : null;
+
+      return `
+=== Solana Wallet Status ===
+
+Connected: ${connected ? "Yes" : "No"}
+Address: ${solAddress}
+Balance: ${solBalance ?? "—"} SOL
 `;
     }
 
