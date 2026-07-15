@@ -2,6 +2,16 @@ async function getLiquidity() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/liquidity/status`, {
     cache: "no-store"
   });
+
+  if (!res.ok) {
+    return {
+      status: "offline",
+      tvl: 0,
+      apr: 0,
+      pools: []
+    };
+  }
+
   return res.json();
 }
 
