@@ -1,14 +1,49 @@
 "use client";
 
 import { useState } from "react";
+
+// ETH wallet (wagmi)
+import { useAccount, useBalance, useConnect, useDisconnect } from "wagmi";
+import { injected } from "wagmi/connectors";
+
+// TON wallet
+import { TonConnectUI, useTonConnectUI } from "@tonconnect/ui-react";
+
+// Solana wallet
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+
+// Sui wallet
+import { useWalletKit } from "@mysten/wallet-kit";
+import { SuiClient } from "@mysten/sui.js/client";
 
 export default function Page() {
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
 
+  // ETH wallet
+  const { address, isConnected } = useAccount();
+  const { disconnect: ethDisconnect } = useDisconnect();
+  const { connect: ethConnect } = useConnect({ connector: injected() });
+  const { data: ethBalance } = useBalance({
+    address,
+    chainId: 1,
+    enabled: isConnected,
+  });
+
+  // TON wallet
+  const [tonConnectUI] = useTonConnectUI();
+  const tonAddress = tonConnectUI.account?.address ?? null;
+  const tonBalance = tonConnectUI.account?.balance ?? null;
+  const isTonConnected = tonConnectUI.account !== null;
+
+  // Solana wallet
   const { connection } = useConnection();
-  const { publicKey, connected, connect, disconnect } = useWallet();
+  const {
+    publicKey,
+    connected: solConnected,
+    connect: solConnect,
+    disconnect: solDisconnect,
+  } = useWallet();
 
   const getSolBalance = async () => {
     if (!publicKey) return null;
@@ -16,121 +51,83 @@ export default function Page() {
     return lamports / 1_000_000_000;
   };
 
+  // Sui wallet
+  const suiWallet = useWalletKit();
+  const suiClient = new SuiClient({ url: "https://fullnode.mainnet.sui.io" });
+
   const runCommand = async (cmd: string) => {
     const lower = cmd.toLowerCase();
 
     // HELP
     if (lower === "help") {
       return `
-Available commands:
-solana
+Available Commands:
+identity, status, chains
+eth, ton, solana, sui
+wallet connect eth
+wallet connect ton
 wallet connect solana
+wallet connect sui
+wallet address eth
+wallet address ton
 wallet address solana
+wallet address sui
+wallet balance eth
+wallet balance ton
 wallet balance solana
+wallet balance sui
 wallet status
 wallet disconnect
+liquidity
+liquidity pools
+liquidity tvl
+liquidity apr
+liquidity info <pool>
+liquidity deposit <pool> <amount>
+liquidity withdraw <pool> <amount>
+liquidity stake <pool> <amount>
 `;
     }
 
-    // SOLANA CHAIN INFO
-    if (lower === "solana") {
+    // CLEAR
+    if (lower === "clear") {
+      setHistory([]);
+      return "";
+    }
+
+    // IDENTITY
+    if (lower === "identity") {
+      return "Operator Identity: CharmCapsule → Charm Operator → Mondjoe → Triopath → Heinhtat → Mr.j";
+    }
+
+    // STATUS
+    if (lower === "status") {
+      return "System Status: All modules online.";
+    }
+
+    // CHAINS
+    if (lower === "chains") {
+      return "Active Chains: Ethereum, TON, Solana, Sui";
+    }
+
+    // ETH
+    if (lower === "eth") {
       return `
-Solana Mainnet:
-Cluster: mainnet-beta
-RPC: https://api.mainnet-beta.solana.com
+Ethereum Mainnet:
+Chain ID: 1
+RPC: https://eth.llamarpc.com
 Status: Online
 `;
     }
 
-    // WALLET CONNECT
-    if (lower === "wallet connect solana") {
-      try {
-        await connect();
-        return `
-Solana Wallet Connected:
-Address: ${publicKey?.toBase58() ?? "(fetching...)"}
-`;
-      } catch {
-        return "Solana Connect Error: No wallet found.";
-      }
-    }
-
-    // WALLET ADDRESS
-    if (lower === "wallet address solana") {
+    // TON
+    if (lower === "ton") {
       return `
-Solana Wallet Address:
-${publicKey?.toBase58() ?? "Not connected"}
+TON Network:
+RPC: https://toncenter.com/api/v2/jsonRPC
+Status: Online
 `;
     }
 
-    // WALLET BALANCE
-    if (lower === "wallet balance solana") {
-      if (!connected) return "Solana wallet not connected.";
-      const sol = await getSolBalance();
-      return `
-Solana Balance:
-${sol} SOL
-`;
-    }
-
-    // WALLET STATUS (FIXED)
-    if (lower === "wallet status") {
-      const solAddress = publicKey?.toBase58() ?? "Not connected";
-      const solBalance = connected ? await getSolBalance() : null;
-
-      return `
-=== Solana Wallet Status ===
-
-Connected: ${connected ? "Yes" : "No"}
-Address: ${solAddress}
-Balance: ${solBalance ?? "—"} SOL
-`;
-    }
-
-    // WALLET DISCONNECT
-    if (lower === "wallet disconnect") {
-      disconnect();
-      return "Wallet disconnected successfully.";
-    }
-
-    return `Unknown command: ${cmd}`;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-
-    const output = await runCommand(input.trim());
-    setHistory((prev) => [...prev, `> ${input}`, output]);
-    setInput("");
-  };
-
-  return (
-    <div className="p-6 text-white">
-      <h1 className="text-2xl font-bold mb-4">Operator Terminal</h1>
-
-      <div className="border border-gray-700 rounded-lg p-4 h-[500px] overflow-y-auto bg-black/40">
-        {history.map((line, i) => (
-          <div key={i} className="text-gray-300 whitespace-pre-line mb-1">
-            {line}
-          </div>
-        ))}
-      </div>
-
-      <form onSubmit={handleSubmit} className="mt-4 flex gap-2">
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="flex-1 bg-black border border-gray-700 rounded px-3 py-2 text-white"
-          placeholder="Type a command…"
-        />
-        <button
-          type="submit"
-          className="px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white"
-        >
-          Run
-        </button>
-      </form>
-    </div>
-  );
-}
+    // SOLANA
+    if (lower === "solana") {
