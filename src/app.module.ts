@@ -8,6 +8,7 @@ import { BadgeModule } from './badge/badge.module';
 import { UnifiedIngestionModule } from './unified-ingestion/unified-ingestion.module';
 import { AuditModule } from './audit/audit.module';
 import { OperatorDashboardModule } from './operator-dashboard/
+import { OperatorFrontendModule } from './operator-frontend/operator-frontend.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { OperatorDashboardModule } from './operator-dashboard/
     BadgeModule,
     UnifiedIngestionModule,
     AuditModule,
-    Operator Dashboard
+    Operator Dashboard,
+    OperatorFrontendModule,
   ],
 })
 export class AppModule {}
