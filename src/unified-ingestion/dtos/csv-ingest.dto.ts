@@ -1,7 +1,8 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsIn } from 'class-validator';
 
-export class CsvIngestDto {
+export class ChainIngestDto {
   @IsString()
   @IsNotEmpty()
-  path: string;
+  @IsIn(['ethereum', 'bsc', 'polygon', 'arbitrum', 'base', 'solana'])
+  chain: string;
 }
