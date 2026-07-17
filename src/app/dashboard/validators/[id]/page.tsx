@@ -1,4 +1,6 @@
 import DashboardCard from "@/components/ui/DashboardCard";
+import SlashingRiskCard from "@/components/ui/SlashingRiskCard";
+import { calculateSlashingRisk } from "@/lib/slashingRisk";
 
 async function getValidator(id) {
   // Mock data — replace with your real API later
@@ -21,8 +23,22 @@ async function getValidator(id) {
 export default async function ValidatorDetailsPage({ params }) {
   const validator = await getValidator(params.id);
 
+  // Calculate slashing risk for this validator
+  const risk = calculateSlashingRisk({
+    doubleSignEvents: 0,
+    surroundVoteEvents: 1,
+    missedAttestations: 8,
+    lowParticipationEpochs: 3,
+    syncFailures: 1,
+    correctnessRate: 95,
+  });
+
   return (
     <div className="flex flex-col gap-6">
+      {/* Slashing Risk Score */}
+      <SlashingRiskCard score={risk.score} category={risk.category} />
+
+      {/* Validator Overview */}
       <DashboardCard title={`Validator ${validator.id}`}>
         <div className="mb-4">
           <p>
@@ -66,6 +82,7 @@ export default async function ValidatorDetailsPage({ params }) {
         </div>
       </DashboardCard>
 
+      {/* Attestation History */}
       <DashboardCard title="Attestation History">
         <div className="flex flex-col gap-2">
           {validator.attestationHistory.map((a) => (
