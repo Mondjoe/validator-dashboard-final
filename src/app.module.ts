@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
+
 import { AuthModule } from './auth/auth.module';
 import { WalletModule } from './wallet/wallet.module';
 import { VaultModule } from './vault/vault.module';
 import { DaoModule } from './dao/dao.module';
+import { BadgeModule } from './badge/badge.module';
 import { UnifiedIngestionModule } from './unified-ingestion/unified-ingestion.module';
+import { AuditModule } from './audit/audit.module';
 
 @Module({
   imports: [
@@ -11,7 +14,9 @@ import { UnifiedIngestionModule } from './unified-ingestion/unified-ingestion.mo
     WalletModule,
     VaultModule,
     DaoModule,
+    BadgeModule,
     UnifiedIngestionModule,
+    AuditModule,
   ],
 })
 export class AppModule {}
