@@ -7,7 +7,7 @@ import { DaoModule } from './dao/dao.module';
 import { BadgeModule } from './badge/badge.module';
 import { UnifiedIngestionModule } from './unified-ingestion/unified-ingestion.module';
 import { AuditModule } from './audit/audit.module';
-import { OperatorDashboardModule } from './operator-dashboard/operator-dashboard.module';
+import { OperatorDashboardModule } from './operator-dashboard/
 
 @Module({
   imports: [
