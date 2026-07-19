@@ -1,1 +1,1 @@
-mkdir -p src/operator-node-health/rewards
+mkdir -p src/operator-node-health/rewards/reward-history.dto.ts
