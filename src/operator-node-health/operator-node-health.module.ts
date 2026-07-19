@@ -1,11 +1,20 @@
-import { Module } from '@nestjs/common';
-import { OperatorNodeHealthController } from './operator-node-health.controller';
-import { OperatorNodeHealthService } from './operator-node-health.service';
-import { HeartbeatService } from './heartbeat/heartbeat.service';
+import { ValidatorDutyService } from './duties/validator-duty.service';
+import { ValidatorDutyController } from './duties/validator-duty.controller';
 
 @Module({
-  controllers: [OperatorNodeHealthController],
-  providers: [OperatorNodeHealthService, HeartbeatService],
+  controllers: [
+    OperatorNodeHealthController,
+    NodeEventController,
+    RewardHistoryController,
+    ValidatorDutyController
+  ],
+  providers: [
+    OperatorNodeHealthService,
+    HeartbeatService,
+    NodeEventService,
+    RewardHistoryService,
+    ValidatorDutyService
+  ],
   exports: [OperatorNodeHealthService]
 })
 export class OperatorNodeHealthModule {}
