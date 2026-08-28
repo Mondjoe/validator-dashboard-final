@@ -1,0 +1,9 @@
+{
+  "/page": "app/page.js",
+  "/api/ping/eth/route": "app/api/ping/eth/route.js",
+  "/api/ping/ton/route": "app/api/ping/ton/route.js",
+  "/api/rewards/route": "app/api/rewards/route.js",
+  "/api/ping/tron/route": "app/api/ping/tron/route.js",
+  "/api/alerts/route": "app/api/alerts/route.js",
+  "/dashboard/page": "app/dashboard/page.js"
+}

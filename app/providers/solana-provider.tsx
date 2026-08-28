@@ -1,22 +1,17 @@
 "use client";
 
-import { Connection, clusterApiUrl } from "@solana/web3.js";
-import { createContext, useContext } from "react";
-
-const SolanaContext = createContext<Connection | null>(null);
+import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
+import { PhantomWalletAdapter } from "@solana/wallet-adapter-wallets";
 
 export function SolanaProvider({ children }: { children: React.ReactNode }) {
-  const connection = new Connection(clusterApiUrl("mainnet-beta"), "confirmed");
+  const endpoint = "https://api.mainnet-beta.solana.com";
+  const wallets = [new PhantomWalletAdapter()];
 
   return (
-    <SolanaContext.Provider value={connection}>
-      {children}
-    </SolanaContext.Provider>
+    <ConnectionProvider endpoint={endpoint}>
+      <WalletProvider wallets={wallets} autoConnect>
+        {children}
+      </WalletProvider>
+    </ConnectionProvider>
   );
-}
-
-export function useSolana() {
-  const ctx = useContext(SolanaContext);
-  if (!ctx) throw new Error("SolanaProvider missing");
-  return ctx;
 }
